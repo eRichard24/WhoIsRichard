@@ -8,21 +8,32 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script>
+/* 配色主題：A 藏青・金 / B 曜石・琥珀 / C 松綠・石灰。
+   訪客可於頁尾切換器變更（存入瀏覽器），或以 ?theme=B 網址參數預覽；
+   想修改預設主題，改下方 DEFAULT_THEME 即可。 */
+(function(){
+  var DEFAULT_THEME='A';
+  var q=null; try{ q=new URLSearchParams(location.search).get('theme'); }catch(e){}
+  var t=(q||localStorage.getItem('rc-theme')||DEFAULT_THEME).toUpperCase();
+  if(['A','B','C'].indexOf(t)<0) t=DEFAULT_THEME;
+  document.documentElement.setAttribute('data-theme',t);
+})();
+</script>
 <style>
 :root{
-  --ink:#06162d;
-  --ink-2:#1d222d;
-  --gold:#c9a227;
-  --gold-soft:#e8d9a8;
-  --paper:#ffffff;
-  --mist:#f4f4f2;
-  --line:#dcd8cd;
-  --grey:#6b7280;
-  --serif:'Cormorant Garamond','Noto Serif TC','Noto Serif SC',serif;
-  --sans:'Inter','Noto Sans TC','Noto Sans SC',sans-serif;
-  --ease-dir:cubic-bezier(0.77,0,0.175,1);
-  --ease-circ:cubic-bezier(0.075,0.82,0.165,1);
-}
+--ink:#0a1f3d;
+--ink-2:#232b3d;
+--gold:#b8912f;
+--gold-soft:#e7d8ab;
+--paper:#fffdf7;
+--mist:#f6f2e7;
+--line:#ddd6c3;
+--grey:#6d7280;
+--serif:'Cormorant Garamond','Noto Serif TC','Noto Serif SC',serif;
+--sans:'Inter','Noto Sans TC','Noto Sans SC',sans-serif;
+--ease-dir:cubic-bezier(0.77,0,0.175,1);
+--ease-circ:cubic-bezier(0.075,0.82,0.165,1);}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
@@ -160,7 +171,7 @@ section{padding:11vh 4vw;position:relative}
 @media(max-width:960px){.stats{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.stats{grid-template-columns:1fr}}
 .stat{background:var(--ink);padding:44px 34px;position:relative;transition:background .35s}
-.stat:hover{background:#0a2144}
+.stat:hover{background:#123058}
 .stat .k{font-family:var(--serif);font-weight:600;font-size:clamp(44px,4.6vw,72px);line-height:1;color:var(--gold);font-feature-settings:"tnum" 1}
 .stat .k small{font-size:.42em;font-weight:500;margin-left:2px}
 .stat .t{margin-top:16px;font-size:15px;font-weight:600;letter-spacing:.04em}
@@ -211,12 +222,19 @@ section{padding:11vh 4vw;position:relative}
 }
 .case .bullets li::before{content:"";position:absolute;left:2px;top:20px;width:8px;height:8px;background:var(--gold)}
 .case .clabel{margin-top:34px;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.case .subs{margin-top:30px;max-width:880px;border-top:1px solid var(--line)}
+.case .sub-row{display:grid;grid-template-columns:150px 210px 1fr;gap:2.5vw;padding:16px 0;border-bottom:1px dashed var(--line);align-items:baseline}
+@media(max-width:860px){.case .sub-row{grid-template-columns:1fr;gap:6px}}
+.case .sub-row .sub-y{font-size:11.5px;letter-spacing:.14em;color:var(--gold);font-weight:600}
+.case .sub-row .sub-co{font-family:var(--serif);font-size:19px;font-weight:600}
+.case .sub-row .sub-co small{display:block;font-family:var(--sans);font-size:10.5px;letter-spacing:.12em;color:var(--grey);font-weight:500;margin-top:3px;text-transform:uppercase}
+.case .sub-row p{font-size:13px;color:var(--ink-2);line-height:1.75}
 .case .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;max-width:980px}
 .case .chips span{
   font-size:12.5px;padding:8px 16px;border:1px solid var(--line);color:var(--ink-2);
   transition:border-color .3s,color .3s,background .3s;
 }
-.case .chips span:hover{border-color:var(--gold);color:#8a6d14;background:#fcf9ef}
+.case .chips span:hover{border-color:var(--gold);color:#7d6210;background:#fcf9ef}
 .case .chips span i{font-style:normal;color:var(--gold);margin-left:8px;font-size:11px}
 
 /* ---------- clients ---------- */
@@ -252,7 +270,7 @@ section{padding:11vh 4vw;position:relative}
 .cc:hover .desc{max-height:180px;opacity:1}
 .cc .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
 .cc .tags i{font-style:normal;font-size:10.5px;letter-spacing:.1em;padding:4px 10px;border:1px solid var(--line);color:var(--grey);transition:border-color .3s,color .3s}
-.cc:hover .tags i{border-color:var(--gold);color:#8a6d14}
+.cc:hover .tags i{border-color:var(--gold);color:#7d6210}
 .cc .yr{position:absolute;top:30px;right:26px;font-size:11px;color:var(--grey);font-feature-settings:"tnum" 1;letter-spacing:.08em}
 .cc.hide{display:none}
 .cfoot{margin-top:4vh;font-size:12px;color:var(--grey);letter-spacing:.06em}
@@ -280,6 +298,41 @@ section{padding:11vh 4vw;position:relative}
 .ex h3{font-family:var(--serif);font-size:24px;font-weight:600;margin:12px 0 10px}
 .ex p{font-size:13.5px;color:var(--ink-2);line-height:1.8}
 
+/* ---------- blog 我看金融與科技（此區塊可整包遷移，見 blog.js 說明） ---------- */
+#blog{background:var(--paper)}
+#blog .intro{max-width:62ch;color:var(--ink-2);font-size:15px;margin-bottom:6vh}
+.post{border-top:1px solid var(--line);cursor:pointer;position:relative;padding:36px 0 30px}
+.post:last-of-type{border-bottom:1px solid var(--line)}
+.post .row{display:grid;grid-template-columns:110px 1.6fr 40px;gap:3vw;align-items:baseline}
+@media(max-width:960px){.post .row{grid-template-columns:1fr 34px}.post .row .date{grid-column:1/-1;margin-bottom:8px}}
+.post .date{font-size:12px;letter-spacing:.16em;color:var(--gold);font-weight:600;font-feature-settings:"tnum" 1}
+.post h3{font-family:var(--serif);font-weight:600;font-size:clamp(24px,2.6vw,38px);letter-spacing:-.01em;transition:color .3s;line-height:1.25}
+.post:hover h3{color:var(--gold)}
+.post .pm{font-family:var(--serif);font-size:30px;color:var(--gold);justify-self:end;transition:transform .4s var(--ease-circ);line-height:1}
+.post.open .pm{transform:rotate(45deg)}
+.post .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.post .tags i{font-style:normal;font-size:10.5px;letter-spacing:.12em;padding:4px 12px;border:1px solid var(--line);color:var(--grey)}
+.post .excerpt{margin-top:14px;font-size:13.5px;color:var(--ink-2);max-width:70ch;line-height:1.8}
+.post .meta{display:flex;gap:26px;align-items:center;margin-top:18px}
+.post .like{background:none;border:1px solid var(--line);cursor:pointer;font-family:var(--sans);font-size:11px;letter-spacing:.12em;color:var(--ink-2);padding:8px 18px;display:inline-flex;align-items:center;gap:8px;transition:border-color .25s,color .25s,background .25s}
+.post .like:hover{border-color:var(--gold);color:#7d6210}
+.post .like.liked{border-color:var(--gold);color:var(--gold);background:#fcf9ef}
+.post .like svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.6}
+.post .like.liked svg{fill:var(--gold);stroke:var(--gold)}
+.post .more{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--grey);font-weight:500}
+.post .body{max-height:0;overflow:hidden;opacity:0;transition:max-height .7s var(--ease-circ),opacity .45s .05s}
+.post.open .body{max-height:6000px;opacity:1}
+.post .body-in{padding:8px 0 50px calc(110px + 3vw)}
+@media(max-width:960px){.post .body-in{padding-left:0}}
+.post .body-in p.p{font-size:14.5px;line-height:2;color:var(--ink-2);max-width:74ch;margin-bottom:1.1em;text-align:justify}
+.post .body-in p.p b{color:var(--ink)}
+.post .cmts{margin-top:44px;border-top:1px solid var(--line);padding-top:26px;max-width:880px}
+.post .cmts .clabel{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.post .giscus-hint{font-size:12px;color:var(--grey);letter-spacing:.05em;margin-top:10px}
+.post .giscus-box{margin-top:16px}
+.post .giscus-note{font-size:12.5px;color:var(--grey);line-height:1.9;border:1px dashed var(--line);padding:20px 24px;max-width:640px}
+.post .giscus-note b{color:var(--gold);font-weight:600;letter-spacing:.1em}
+
 /* ---------- footer ---------- */
 footer{background:var(--ink);color:var(--paper);padding:10vh 4vw 6vh}
 footer .big{font-family:var(--serif);font-weight:500;font-size:clamp(30px,4.4vw,64px);line-height:1.25;max-width:22ch}
@@ -304,6 +357,51 @@ footer .base{margin-top:8vh;display:flex;justify-content:space-between;flex-wrap
 .comm .talk::before{content:"";position:absolute;left:-6px;top:26px;width:10px;height:10px;background:var(--ink);border:2px solid var(--gold)}
 .comm .talk h4{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--paper)}
 .comm .talk p{font-size:12.5px;color:#93a1b8;margin-top:4px;letter-spacing:.04em}
+.comm-pic{width:280px;max-width:100%;flex-shrink:0;margin:0}
+.comm-pic img{width:100%;display:block;border:1px solid rgba(255,255,255,.22)}
+.comm-pic figcaption{margin-top:10px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:#93a1b8}
+
+/* ---------- 開頭觀點精選（內容由 blog.js 依最新文章自動帶入） ---------- */
+.hl{display:flex;align-items:center;gap:18px;max-width:860px;margin-top:5vh;padding:13px 20px;border:1px solid var(--line);background:var(--paper);text-decoration:none;transition:border-color .3s}
+.hl:hover{border-color:var(--gold)}
+.hl-tag{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:600;white-space:nowrap;border-right:1px solid var(--line);padding-right:18px}
+.hl-title{font-family:var(--serif);font-size:17px;font-weight:600;color:var(--ink);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hl-date{font-size:11px;color:var(--grey);letter-spacing:.1em;white-space:nowrap}
+.hl-go{color:var(--gold);font-size:18px;transition:transform .3s}
+.hl:hover .hl-go{transform:translateX(5px)}
+@media(max-width:860px){.hl{flex-wrap:wrap;gap:8px 14px}.hl-title{flex-basis:100%;order:3;white-space:normal}}
+
+/* ---------- 配色切換器（頁尾） ---------- */
+.tsw{display:flex;align-items:center;gap:8px}
+.tsw>span{font-size:10px;letter-spacing:.2em;text-transform:uppercase}
+.tsw button{font-size:11px;letter-spacing:.14em;padding:5px 12px;border:1px solid rgba(255,255,255,.28);background:none;color:#8b98ad;cursor:pointer;font-family:var(--sans);transition:border-color .3s,color .3s}
+.tsw button:hover{border-color:var(--gold);color:var(--gold)}
+.tsw button.on{border-color:var(--gold);color:var(--gold);background:rgba(255,255,255,.06)}
+
+/* ---------- 配色主題 B・曜石琥珀（深色） ---------- */
+[data-theme="B"]{--ink:#e7e4da;--ink-2:#c6c2b4;--gold:#d9a441;--gold-soft:#4a3d22;--paper:#181b23;--mist:#101218;--line:#2b2f3a;--grey:#9aa3b2}
+[data-theme="B"] #scale,[data-theme="B"] footer,[data-theme="B"] .stat{background:#0b0d13!important;color:#e7e4da!important}
+[data-theme="B"] #scale .sec-head h2,[data-theme="B"] .scale-strip .v,[data-theme="B"] .comm .talk h4{color:#e7e4da}
+[data-theme="B"] .sq9.rev i{background:#e7e4da}
+[data-theme="B"] .chip.act{background:#0b0d13!important;color:#d9a441!important}
+[data-theme="B"] ::selection{background:#d9a441!important;color:#141109}
+[data-theme="B"] .stat:hover{background:#22293a!important}
+[data-theme="B"] .case .chips span:hover,[data-theme="B"] .cc:hover,[data-theme="B"] .ex:hover,[data-theme="B"] .post .like.liked{background:#14181f}
+[data-theme="B"] .case .chips span:hover,[data-theme="B"] .cc:hover .tags i,[data-theme="B"] .post .like:hover{color:#d9a441}
+[data-theme="B"] .scale-strip .l,[data-theme="B"] footer .cols .c .l,[data-theme="B"] footer .base,[data-theme="B"] .tsw button{color:#a9b2c2}
+[data-theme="B"] .stat .d,[data-theme="B"] .comm .talk p,[data-theme="B"] .comm-pic figcaption{color:#aeb8ca}
+[data-theme="B"] #scale .lede{color:#b8c1d2}
+[data-theme="B"] .edu .e .v{color:#c5cedd}
+
+/* ---------- 配色主題 C・松綠石灰 ---------- */
+[data-theme="C"]{--ink:#1e3a30;--ink-2:#263732;--gold:#9c7134;--gold-soft:#e3d7bd;--paper:#fdfdf9;--mist:#f3f5f0;--line:#d7dcd2;--grey:#6e7a71}
+[data-theme="C"] .stat:hover{background:#2c5243}
+[data-theme="C"] .case .chips span:hover,[data-theme="C"] .cc:hover,[data-theme="C"] .ex:hover,[data-theme="C"] .post .like.liked{background:#f6f3e6}
+[data-theme="C"] .case .chips span:hover,[data-theme="C"] .cc:hover .tags i,[data-theme="C"] .post .like:hover{color:#77571b}
+[data-theme="C"] .scale-strip .l,[data-theme="C"] footer .cols .c .l,[data-theme="C"] footer .base{color:#93a496}
+[data-theme="C"] .stat .d,[data-theme="C"] .comm .talk p,[data-theme="C"] .comm-pic figcaption{color:#9fae9f}
+[data-theme="C"] #scale .lede{color:#b2bfae}
+[data-theme="C"] .edu .e .v{color:#bfccba}
 </style>
 </head>
 <body>
@@ -318,6 +416,7 @@ footer .base{margin-top:8vh;display:flex;justify-content:space-between;flex-wrap
     <a href="#clients" data-i18n="nav_clients"></a>
     <a href="#others" data-i18n="nav_others"></a>
     <a href="#exp" data-i18n="nav_exp"></a>
+    <a href="#blog" data-i18n="nav_blog"></a>
   </nav>
   <div class="hd-right">
     <div class="lang" id="langSwitch">
@@ -345,10 +444,16 @@ footer .base{margin-top:8vh;display:flex;justify-content:space-between;flex-wrap
       </div>
     </div>
     <figure class="hero-pic rv">
-      <img src="community-talk.png" data-i18n-alt="hero_pic_alt">
+      <img src="headshot.jpg" data-i18n-alt="hero_pic_alt">
       <figcaption data-i18n="hero_cap"></figcaption>
     </figure>
   </div>
+  <a class="hl rv" id="heroHl" href="#blog" style="display:none">
+    <span class="hl-tag" data-i18n="hl_tag"></span>
+    <span class="hl-title" id="hlTitle"></span>
+    <span class="hl-date tnum" id="hlDate"></span>
+    <span class="hl-go">→</span>
+  </a>
   <div class="scroll-hint"><span class="bar"></span><span data-i18n="hero_scroll"></span></div>
   <div class="hero-num tnum">
     <div class="n">25<span style="font-size:.45em">+</span></div>
@@ -413,6 +518,15 @@ footer .base{margin-top:8vh;display:flex;justify-content:space-between;flex-wrap
   <div class="exp" id="expGrid"></div>
 </section>
 
+<!-- ================= BLOG 我看金融與科技（此區塊可整包遷移，見 blog.js 說明） ================= -->
+<section id="blog">
+  <div class="sec-head">
+    <div class="sq9"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="no">06</span><h2 data-i18n="blog_h2"></h2><div class="rule"></div>
+  </div>
+  <p class="intro rv" data-i18n="blog_intro"></p>
+  <div id="blogList"></div>
+</section>
+
 <!-- ================= FOOTER ================= -->
 <footer id="contact">
   <div class="big" data-i18n="ft_big"></div>
@@ -426,22 +540,33 @@ footer .base{margin-top:8vh;display:flex;justify-content:space-between;flex-wrap
     <div class="talks" id="talkList">
       <div class="tl-head" data-i18n="comm_head"></div>
     </div>
+    <figure class="comm-pic rv">
+      <img src="community-talk.png" data-i18n-alt="comm_pic_alt">
+      <figcaption data-i18n="comm_pic_cap"></figcaption>
+    </figure>
   </div>
   <div class="edu">
     <div class="e"><div class="l" data-i18n="edu_cert_l"></div><div class="v" data-i18n="edu_cert_v"></div></div>
   </div>
   <div class="base">
     <span>© 2026 Richard CHAN</span>
+    <div class="tsw" id="themeSw">
+      <span data-i18n="theme_label"></span>
+      <button data-th="A" data-i18n="theme_a"></button>
+      <button data-th="B" data-i18n="theme_b"></button>
+      <button data-th="C" data-i18n="theme_c"></button>
+    </div>
     <span>Shanghai / Taipei</span>
   </div>
 </footer>
+<script src="blog.js"></script>
 <script>
 /* ================= I18N ================= */
 const TR = {
 'zh-Hant': {
   brand_zh:'詹鈞淵',
   meta_title:'詹鈞淵 Richard Chan — 保險科技策略與交付顧問',
-  nav_scale:'業務規模', nav_cases:'重點案例', nav_clients:'服務客戶', nav_others:'其他經歷', nav_exp:'專業領域', nav_contact:'聯絡方式',
+  nav_scale:'業務規模', nav_cases:'重點案例', nav_clients:'服務客戶', nav_others:'其他經歷', nav_exp:'專業領域', nav_blog:'觀點', nav_contact:'聯絡方式',
   hero_meta1:'<b>保險科技策略顧問</b> · 數字化及 IT 策略',
   hero_meta2:'上海 <b>/</b> 台北',
   hero_meta3:'25+ 年兩岸 IT 交付經驗',
@@ -450,8 +575,8 @@ const TR = {
   hero_role:'端到端 IT 服務<br>數位轉型策略<br>系統整合與交付管理<br>跨區域團隊管理',
   hero_scroll:'向下探索',
   hero_num_l:'Years of Delivery',
-  hero_pic_alt:'阿里巴巴雲棲大會金融分會演講',
-  hero_cap:'阿里巴巴雲棲大會 · 金融分會<br><b>主講人 · 2022</b>',
+  hero_pic_alt:'詹鈞淵專業照',
+  hero_cap:'詹鈞淵 · Richard Chan<br><b>保險科技策略顧問</b>',
   scale_h2:'業務規模',
   scale_lede:'數字會說話<br>以下是在 Accenture 與 IBM 任職期間直接帶領、交付或共同創造的業務規模——<b>從一個財政年度內 60% 的團隊成長，到一年 3,900 萬美元的金融服務營收</b>',
   st1t:'美元年營收', st1d:'領導 350+ 人金融服務團隊，締造 US$39M 年度營收（Accenture）',
@@ -463,21 +588,28 @@ const TR = {
   strip3l:'服務市場', strip3v:'中國大陸 · 台灣 · 越南',
   cases_h2:'重點案例',
   cases_clients:'代表客戶',
-  cases_note:'點選任一段經歷展開交付細節與代表客戶 · 三段經歷涵蓋 2023 迄今、2020–2023、2012–2020',
+  cases_note:'點選任一段經歷展開交付細節與代表客戶 · 「獨立顧問」期間包含谷睿智慧（2026 迄今）與加林軟體（2023–2025）兩段委任',
   clients_h2:'服務客戶',
   clients_note:'將游標停留在客戶名稱上可查看交付內容 · 共 <b id="ctotal"></b> 家機構 · 點選上方標籤可依任職階段篩選',
   others_h2:'其他經歷',
   exp_h2:'專業領域',
+  nav_blog:'觀點',
+  blog_h2:'我看金融與科技',
+  blog_intro:'關於保險科技、數位轉型與 IT 策略的第一線觀察與實戰心得 · 歡迎點讚支持、留言交流',
   ft_big:'讓下一次的科技轉型，<br>成為<a href="mailto:Richard.Jan@gmail.com">可預測的未來</a>',
   ft_tw_l:'台灣', ft_cn_l:'中國大陸', ft_lang_l:'語言', ft_lang_v:'中文（流利）· English',
   comm_head:'Community · 社群與演講',
   edu_cert_l:'認證',
-  edu_cert_v:'復旦大學認證客座講師 · AIG Management Associate（2007）· 壽險業務員證照（2006）· FLMI（2004）'
+  edu_cert_v:'復旦大學認證客座講師 · AIG Management Associate（2007）· 壽險業務員證照（2006）· FLMI（2004）',
+  hl_tag:'最新觀點',
+  theme_label:'配色', theme_a:'藏青', theme_b:'曜石', theme_c:'松綠',
+  comm_pic_alt:'詹鈞淵社群演講照片',
+  comm_pic_cap:'社群演講 · 保險科技分享'
 },
 'zh-Hans': {
   brand_zh:'詹钧渊',
   meta_title:'詹钧渊 Richard Chan — 保险科技策略与交付顾问',
-  nav_scale:'业务规模', nav_cases:'重点案例', nav_clients:'服务客户', nav_others:'其他经历', nav_exp:'专业领域', nav_contact:'联系方式',
+  nav_scale:'业务规模', nav_cases:'重点案例', nav_clients:'服务客户', nav_others:'其他经历', nav_exp:'专业领域', nav_blog:'观点', nav_contact:'联系方式',
   hero_meta1:'<b>保险科技策略顾问</b> · 数字化及 IT 策略',
   hero_meta2:'上海 <b>/</b> 台北',
   hero_meta3:'25+ 年两岸 IT 交付经验',
@@ -486,8 +618,8 @@ const TR = {
   hero_role:'端到端 IT 服务<br>数字化转型策略<br>系统整合与交付管理<br>跨区域团队管理',
   hero_scroll:'向下探索',
   hero_num_l:'Years of Delivery',
-  hero_pic_alt:'阿里巴巴云栖大会金融分会演讲',
-  hero_cap:'阿里巴巴云栖大会 · 金融分会<br><b>主讲人 · 2022</b>',
+  hero_pic_alt:'詹钧渊专业照',
+  hero_cap:'詹钧渊 · Richard Chan<br><b>保险科技策略顾问</b>',
   scale_h2:'业务规模',
   scale_lede:'数字会说话<br>以下是在 Accenture 与 IBM 任职期间直接带领、交付或共同创造的业务规模——<b>从一个财政年度内 60% 的团队成长，到一年 3,900 万美元金融服务营收</b>',
   st1t:'美元年营收', st1d:'带领 350+ 人金融服务团队，缔造 US$39M 年度营收（Accenture）',
@@ -499,21 +631,28 @@ const TR = {
   strip3l:'服务市场', strip3v:'中国大陆 · 中国台湾 · 越南',
   cases_h2:'重点案例',
   cases_clients:'代表客户',
-  cases_note:'点选任一段经历展开交付细节与代表客户 · 三段经历涵盖 2023 迄今、2020–2023、2012–2020',
+  cases_note:'点选任一段经历展开交付细节与代表客户 · 「独立顾问」期间包含谷睿智慧（2026 迄今）与加林软件（2023–2025）两段委任',
   clients_h2:'服务客户',
   clients_note:'将光标停留在客户名称上可查看交付内容 · 共 <b id="ctotal"></b> 家机构 · 点选上方标签可依任职阶段筛选',
   others_h2:'其他经历',
   exp_h2:'专业领域',
+  nav_blog:'观点',
+  blog_h2:'我看金融与科技',
+  blog_intro:'关于保险科技、数字化转型与 IT 策略的第一线观察与实战心得 · 欢迎点赞支持、留言交流',
   ft_big:'让下一次的科技转型，<br>成为<a href="mailto:Richard.Jan@gmail.com">可预测的未来</a>',
   ft_tw_l:'中国台湾', ft_cn_l:'中国大陆', ft_lang_l:'语言', ft_lang_v:'中文（流利）· English',
   comm_head:'Community · 社群与演讲',
   edu_cert_l:'认证',
-  edu_cert_v:'复旦大学认证客座讲师 · AIG Management Associate（2007）· 寿险业务员证照（2006）· FLMI（2004）'
+  edu_cert_v:'复旦大学认证客座讲师 · AIG Management Associate（2007）· 寿险业务员证照（2006）· FLMI（2004）',
+  hl_tag:'最新观点',
+  theme_label:'配色', theme_a:'藏青', theme_b:'曜石', theme_c:'松绿',
+  comm_pic_alt:'詹钧渊社群演讲照片',
+  comm_pic_cap:'社群演讲 · 保险科技分享'
 },
 'en': {
   brand_zh:'詹鈞淵',
   meta_title:'Richard Chan — Insurance Technology Strategy & Delivery Advisor',
-  nav_scale:'Scale', nav_cases:'Case Highlights', nav_clients:'Clients', nav_others:'Earlier Career', nav_exp:'Expertise', nav_contact:'Contact',
+  nav_scale:'Scale', nav_cases:'Case Highlights', nav_clients:'Clients', nav_others:'Earlier Career', nav_exp:'Expertise', nav_blog:'Perspectives', nav_contact:'Contact',
   hero_meta1:'<b>Insurance Technology Advisor</b> · Digital & IT Strategy',
   hero_meta2:'Shanghai <b>/</b> Taipei',
   hero_meta3:'25+ Years of Cross-Strait IT Delivery',
@@ -522,8 +661,8 @@ const TR = {
   hero_role:'End-to-End IT Services<br>Digital Transformation Strategy<br>System Integration & Delivery<br>Cross-Regional Team Management',
   hero_scroll:'Scroll',
   hero_num_l:'Years of Delivery',
-  hero_pic_alt:'Keynote at Alibaba Cloud Apsara Conference, Financial Forum',
-  hero_cap:'Alibaba Cloud Apsara Conference · Financial Forum<br><b>Keynote Speaker · 2022</b>',
+  hero_pic_alt:'Professional headshot of Richard Chan',
+  hero_cap:'Richard Chan<br><b>Insurance Technology Strategy Advisor</b>',
   scale_h2:'Business Scale',
   scale_lede:'The numbers speak<br>Business scale led, delivered or co-created during my tenure at Accenture and IBM — <b>from 60% team growth within a single fiscal year to US$39M in annual financial-services revenue</b>',
   st1t:'Annual Revenue (US$)', st1d:'Led a 350+ financial-services team to US$39M annual revenue (Accenture)',
@@ -535,16 +674,23 @@ const TR = {
   strip3l:'Markets', strip3v:'China · Taiwan · Vietnam',
   cases_h2:'Case Highlights',
   cases_clients:'Key Clients',
-  cases_note:'Click any experience to expand delivery details and key clients · covering 2023–present, 2020–2023, 2012–2020',
+  cases_note:'Click any experience to expand delivery details and key clients · the Independent Advisor engagement includes appointments at Gooru Wisdom (2026–present) and Jialin Software (2023–2025)',
   clients_h2:'Clients Served',
   clients_note:'Hover over a client to see the engagement · <b id="ctotal"></b> institutions · use the tags above to filter by career stage',
   others_h2:'Earlier Career',
   exp_h2:'Expertise',
+  nav_blog:'Perspectives',
+  blog_h2:'Perspectives on Finance & Tech',
+  blog_intro:'Field notes on insurance technology, digital transformation and IT strategy · like a post or join the discussion',
   ft_big:'Make the next technology transformation<br>a <a href="mailto:Richard.Jan@gmail.com">predictable future</a>',
   ft_tw_l:'Taiwan', ft_cn_l:'China', ft_lang_l:'Languages', ft_lang_v:'Mandarin (Fluent) · English',
   comm_head:'Community · Talks & Lectures',
   edu_cert_l:'Certifications',
-  edu_cert_v:'Certified Guest Lecturer, Fudan University · AIG Management Associate (2007) · Life Insurance Agent License (2006) · FLMI (2004)'
+  edu_cert_v:'Certified Guest Lecturer, Fudan University · AIG Management Associate (2007) · Life Insurance Agent License (2006) · FLMI (2004)',
+  hl_tag:'Latest Insight',
+  theme_label:'Theme', theme_a:'Navy', theme_b:'Obsidian', theme_c:'Pine',
+  comm_pic_alt:'Richard Chan speaking at a community event',
+  comm_pic_cap:'Community Talks · Insurance Tech'
 }};
 
 const STAGES = {
@@ -620,8 +766,11 @@ const CASES = {
   { idx:'02.3', co:'獨立顧問', role:'數字化及 IT 策略顧問', en:'Digital & IT Strategy Advisor',
     period:'2023.06 — 迄今', loc:'上海 / 台北',
     metrics:[['4','轉型維度'],['1','策略框架'],['20+','服務機構']],
-    bullets:['與台灣最大壽險公司合作制定 IT 策略框架，設計優化的 IT 組織架構，讓科技能力對齊長期業務目標','成功推動客戶團隊在技術創新、組織、業務與文化四個層面完成有效轉型'],
-    clients:[['台灣最大壽險公司','IT 策略框架・組織優化・全面轉型']]}],
+    bullets:['與台灣某保險金控集團合作制定 IT 策略框架，設計優化的 IT 組織架構，讓科技能力對齊長期業務目標','成功推動客戶團隊在技術創新、組織、業務與文化四個層面完成有效轉型'],
+    subs:[
+      ['2026 — 迄今','谷睿智慧','顧問總監','帶領金融科技諮詢團隊，為保險與金融機構提供數位轉型與 IT 策略顧問服務'],
+      ['2023 — 2025','加林軟體','金融科技諮詢服務 · 副總經理','主要客戶：國內某大型保險金控；負責 IT 策略規劃及組織轉型，協助客戶建立與長期業務目標對齊的科技藍圖']],
+    clients:[['台灣某保險金控集團','IT 策略框架・組織優化・全面轉型']]}],
 'zh-Hans': [
   { idx:'02.1', co:'Accenture 大中华区', role:'董事总经理 · 金融服务业务主管', en:'Managing Director, Financial Services Lead',
     period:'2020.04 — 2023.04', loc:'上海',
@@ -636,8 +785,11 @@ const CASES = {
   { idx:'02.3', co:'独立顾问', role:'数字化及 IT 策略顾问', en:'Digital & IT Strategy Advisor',
     period:'2023.06 — 迄今', loc:'上海 / 台北',
     metrics:[['4','转型维度'],['1','策略框架'],['20+','服务机构']],
-    bullets:['与中国台湾最大寿险公司合作制定 IT 策略框架，设计优化的 IT 组织架构，让科技能力对齐长期业务目标','成功推动客户团队在技术创新、组织、业务与文化四个层面完成有效转型'],
-    clients:[['中国台湾最大寿险公司','IT 策略框架・组织优化・全面转型']]}],
+    bullets:['与中国台湾某保险金控集团合作制定 IT 策略框架，设计优化的 IT 组织架构，让科技能力对齐长期业务目标','成功推动客户团队在技术创新、组织、业务与文化四个层面完成有效转型'],
+    subs:[
+      ['2026 — 迄今','谷睿智慧','顾问总监','带领金融科技咨询团队，为保险与金融机构提供数字化转型与 IT 策略顾问服务'],
+      ['2023 — 2025','加林软件','金融科技咨询服务 · 副总经理','主要客户：国内某大型保险金控；负责 IT 策略规划及组织转型，协助客户建立与长期业务目标对齐的科技蓝图']],
+    clients:[['中国台湾某保险金控集团','IT 策略框架・组织优化・全面转型']]}],
 'en': [
   { idx:'02.1', co:'Accenture Greater China', role:'Managing Director · Financial Services Lead', en:'Managing Director, Financial Services Sector Lead',
     period:'Apr 2020 — Apr 2023', loc:'Shanghai',
@@ -652,12 +804,15 @@ const CASES = {
   { idx:'02.3', co:'Independent Advisor', role:'Digital & IT Strategy Advisor', en:'Executive Advisor & Business Partner',
     period:'Jun 2023 — Present', loc:'Shanghai / Taipei',
     metrics:[['4','transformation dimensions'],['1','strategy framework'],['20+','institutions served']],
-    bullets:['Partnered with Taiwan\u2019s largest life insurer to develop an IT strategy framework and design an optimized IT organizational structure, aligning technology with long-term business goals','Championed the client\u2019s transformation across four dimensions: technology innovation, organization, business, and culture'],
-    clients:[["Taiwan's Largest Life Insurer",'IT strategy · org design · transformation']]}]};
+    bullets:['Partnered with a major Taiwan insurance financial holding group to develop an IT strategy framework and design an optimized IT organizational structure, aligning technology with long-term business goals','Championed the client\u2019s transformation across four dimensions: technology innovation, organization, business, and culture'],
+    subs:[
+      ['2026 — Present','谷睿智慧','Consulting Director','Lead the fintech consulting team, advising insurance and financial institutions on digital transformation and IT strategy'],
+      ['2023 — 2025','加林軟體','Deputy GM, FinTech Consulting','Key client: a major domestic insurance financial holding group — led IT strategy planning and organizational transformation, building a technology roadmap aligned with long-term business goals']],
+    clients:[['Taiwan Insurance Financial Holding Group','IT strategy · org design · transformation']]}]};
 
 const CLIENTS = {
 'zh-Hant': [
-  {n:'台灣最大壽險公司', y:'2023–', s:'indep', t:['IT 策略框架','組織設計'], d:'合作制定 IT 策略框架、設計優化的 IT 組織架構，並推動客戶團隊在技術創新、組織、業務與文化四個層面有效轉型'},
+  {n:'台灣某保險金控集團', y:'2023–', s:'indep', t:['IT 策略框架','組織設計'], d:'合作制定 IT 策略框架、設計優化的 IT 組織架構，並推動客戶團隊在技術創新、組織、業務與文化四個層面有效轉型'},
   {n:'ERGO 安顧人壽', y:'2020–23', s:'acc', t:['現況評估'], d:'IT 現況評估（As-Is 分析），識別優化機會並提出改善路徑'},
   {n:'太保壽險', y:'2020–23', s:'acc', t:['核心系統','路線圖規劃'], d:'集團核心系統路線圖規劃與架構設計，對齊長期業務目標'},
   {n:'太保集團', y:'2012–20', s:'ibm', t:['核心系統'], d:'壽險核心系統規劃，以及產險核心系統端到端實施'},
@@ -678,7 +833,7 @@ const CLIENTS = {
   {n:'富邦人壽（越南）', y:'2009–12', s:'other', t:['核心系統'], d:'核心保險系統部署，由台灣提供跨區域支援'},
   {n:'南山人壽', y:'2003–09', s:'other', t:['核心系統轉型'], d:'以客戶端視角主導核心保險系統轉型；率 10+ 人團隊完成廣州至台北 IT 服務遷移，業務零中斷'}],
 'zh-Hans': [
-  {n:'中国台湾最大寿险公司', y:'2023–', s:'indep', t:['IT 策略框架','组织设计'], d:'合作制定 IT 策略框架、设计优化的 IT 组织架构，并推动客户团队在技术创新、组织、业务与文化四个层面有效转型'},
+  {n:'中国台湾某保险金控集团', y:'2023–', s:'indep', t:['IT 策略框架','组织设计'], d:'合作制定 IT 策略框架、设计优化的 IT 组织架构，并推动客户团队在技术创新、组织、业务与文化四个层面有效转型'},
   {n:'ERGO 安顾人寿', y:'2020–23', s:'acc', t:['现况评估'], d:'IT 现况评估（As-Is 分析），识别优化机会并提出改善路径'},
   {n:'太保寿险', y:'2020–23', s:'acc', t:['核心系统','路线图规划'], d:'集团核心系统路线图规划与架构设计，对齐长期业务目标'},
   {n:'太保集团', y:'2012–20', s:'ibm', t:['核心系统'], d:'寿险核心系统规划，以及产险核心系统端到端实施'},
@@ -699,7 +854,7 @@ const CLIENTS = {
   {n:'富邦人寿（越南）', y:'2009–12', s:'other', t:['核心系统'], d:'核心保险系统部署，由中国台湾提供跨区域支援'},
   {n:'南山人寿', y:'2003–09', s:'other', t:['核心系统转型'], d:'以客户端视角主导核心保险系统转型；率 10+ 人团队完成广州至台北 IT 服务迁移，业务零中断'}],
 'en': [
-  {n:"Taiwan's Largest Life Insurer", y:'2023–', s:'indep', t:['IT Strategy','Org Design'], d:'Co-developed an IT strategy framework and designed an optimized IT organizational structure, driving transformation across technology, organization, business and culture'},
+  {n:'Taiwan Insurance Financial Holding Group', y:'2023–', s:'indep', t:['IT Strategy','Org Design'], d:'Co-developed an IT strategy framework and designed an optimized IT organizational structure, driving transformation across technology, organization, business and culture'},
   {n:'ERGO Life', y:'2020–23', s:'acc', t:['As-Is Assessment'], d:'IT current-state (as-is) assessment to identify optimization opportunities and improvement paths'},
   {n:'CPIC Life', y:'2020–23', s:'acc', t:['Core System','Roadmap'], d:'Group core system roadmap planning and architecture design, aligned with long-term business goals'},
   {n:'CPIC Group', y:'2012–20', s:'ibm', t:['Core System'], d:'Life core system planning and end-to-end P&C core system implementation'},
@@ -745,14 +900,20 @@ function renderAll(){
       <div class="row">
         <div class="idx">${c.idx}</div>
         <h3>${c.co}</h3>
-        <div class="where"><b>${c.role}</b>${c.period} · ${c.loc}<br>${c.en}</div>
+        <div class="where"><b>${c.role}</b>${c.period}${c.loc?' · '+c.loc:''}<br>${c.en}</div>
         <div class="pm">+</div>
       </div>
       <div class="body"><div class="body-in">
-        <div class="cmetrics">${c.metrics.map(m=>`<div class="m"><div class="k tnum">${m[0]}</div><div class="t">${m[1]}</div></div>`).join('')}</div>
+        ${c.metrics.length?`<div class="cmetrics">${c.metrics.map(m=>`<div class="m"><div class="k tnum">${m[0]}</div><div class="t">${m[1]}</div></div>`).join('')}</div>`:''}
         <ul class="bullets">${c.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>
-        <div class="clabel">${t.cases_clients} · ${c.clients.length}</div>
-        <div class="chips">${c.clients.map(x=>`<span>${x[0]}<i>${x[1]}</i></span>`).join('')}</div>
+        ${c.subs&&c.subs.length?`<div class="subs">${c.subs.map(x=>`
+          <div class="sub-row">
+            <div class="sub-y tnum">${x[0]}</div>
+            <div class="sub-co">${x[1]}<small>${x[2]}</small></div>
+            <p>${x[3]}</p>
+          </div>`).join('')}</div>`:''}
+        ${c.clients.length?`<div class="clabel">${t.cases_clients} · ${c.clients.length}</div>
+        <div class="chips">${c.clients.map(x=>`<span>${x[0]}<i>${x[1]}</i></span>`).join('')}</div>`:''}
       </div></div>
     </div>`).join('');
 
@@ -792,6 +953,9 @@ function renderAll(){
   document.getElementById('talkList').innerHTML =
     `<div class="tl-head">${t.comm_head}</div>` +
     TALKS[LANG].map(x=>`<div class="talk"><h4>${x[0]}</h4><p>${x[1]}</p></div>`).join('');
+
+  // blog module
+  if(window.renderBlog) renderBlog();
 
   // reveal observer for newly rendered .rv
   document.querySelectorAll('.rv:not(.on)').forEach(el=>io.observe(el));
@@ -833,6 +997,19 @@ document.getElementById('langSwitch').addEventListener('click', e=>{
   renderAll();
 });
 
+// theme switch（A 藏青・金 / B 曜石・琥珀 / C 松綠・石灰）
+function markTheme(){
+  const cur = document.documentElement.getAttribute('data-theme');
+  document.querySelectorAll('#themeSw button').forEach(b=>b.classList.toggle('on', b.dataset.th===cur));
+}
+document.getElementById('themeSw').addEventListener('click', e=>{
+  const b = e.target.closest('button'); if(!b) return;
+  document.documentElement.setAttribute('data-theme', b.dataset.th);
+  localStorage.setItem('rc-theme', b.dataset.th);
+  markTheme();
+  if(window.blogSyncTheme) blogSyncTheme();
+});
+
 /* ================= SCROLL FX ================= */
 let lastY = 0;
 const hd = document.getElementById('hd');
@@ -865,6 +1042,7 @@ const cio = new IntersectionObserver(es=>{
 document.querySelectorAll('.stat .cnt').forEach(el=>cio.observe(el));
 
 renderAll();
+markTheme();
 </script>
 </body>
 </html>
