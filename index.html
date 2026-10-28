@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>詹鈞淵 Richard Chan — 保險科技策略與交付顧問</title>
+<meta name="description" content="25 年保險 IT 策略、系統整合與交付管理經驗，服務兩岸三地 20 餘家保險與金融機構">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#06162d;
+  --ink-2:#1d222d;
+  --gold:#c9a227;
+  --gold-soft:#e8d9a8;
+  --paper:#ffffff;
+  --mist:#f4f4f2;
+  --line:#dcd8cd;
+  --grey:#6b7280;
+  --serif:'Cormorant Garamond','Noto Serif TC','Noto Serif SC',serif;
+  --sans:'Inter','Noto Sans TC','Noto Sans SC',sans-serif;
+  --ease-dir:cubic-bezier(0.77,0,0.175,1);
+  --ease-circ:cubic-bezier(0.075,0.82,0.165,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--ink);color:var(--gold-soft)}
+.tnum{font-feature-settings:"tnum" 1,"lnum" 1}
+a{color:inherit;text-decoration:none}
+
+/* ---------- 3×3 square markers ---------- */
+.sq9{display:grid;grid-template-columns:repeat(3,5px);grid-template-rows:repeat(3,5px);gap:4px;width:23px}
+.sq9 i{background:var(--gold);display:block}
+.sq9.ink i{background:var(--ink)}
+.sq9.rev i{background:var(--paper)}
+
+/* ---------- header ---------- */
+#hd{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 4vw;background:var(--paper);
+  border-bottom:1px solid var(--line);
+}
+#hd.out{animation:hdOut .2s var(--ease-circ) both}
+#hd.in{animation:hdIn .4s var(--ease-circ) both}
+@keyframes hdIn{0%{transform:translateY(-100%)}100%{transform:translateY(0)}}
+@keyframes hdOut{0%{transform:translateY(0)}100%{transform:translateY(-100%)}}
+#hd .brand{display:flex;align-items:center;gap:14px}
+#hd .brand .nm{display:flex;flex-direction:column;line-height:1.1}
+#hd .brand .zh{font-family:var(--serif);font-weight:700;font-size:30px;letter-spacing:.03em}
+#hd .brand .en-name{font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.34em;color:var(--gold);text-transform:uppercase;margin-top:4px}
+#hd .brand::before{content:"";width:9px;height:9px;background:var(--gold);align-self:center;margin-right:2px}
+html[lang="en"] #hd .brand [data-i18n="brand_zh"]{display:none}
+#hd nav{display:flex;gap:30px}
+#hd nav a{
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;
+  position:relative;padding:4px 0;transition:color .25s;
+}
+#hd nav a::after{
+  content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--gold);transition:width .3s var(--ease-circ);
+}
+#hd nav a:hover{color:var(--gold)}
+#hd nav a:hover::after{width:100%}
+#hd .hd-right{display:flex;align-items:center;gap:26px}
+.lang{display:flex;align-items:center;gap:10px}
+.lang button{
+  background:none;border:none;cursor:pointer;font-family:var(--sans);font-weight:600;
+  font-size:11px;letter-spacing:.12em;color:var(--grey);padding:4px 1px;border-bottom:1px solid transparent;
+  transition:color .25s,border-color .25s;
+}
+.lang button:hover{color:var(--ink)}
+.lang button.act{color:var(--gold);border-bottom-color:var(--gold)}
+.lang i{color:var(--line);font-style:normal;font-size:11px}
+#hd .cta{
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;
+  border:1px solid var(--ink);padding:9px 20px;transition:border-width .12s;
+}
+#hd .cta:hover{border-width:2px}
+@media(max-width:1100px){#hd nav{display:none}}
+@media(max-width:640px){#hd .cta{display:none}}
+
+/* ---------- progress bar ---------- */
+#prog{position:fixed;top:0;left:0;height:3px;background:var(--gold);width:0;z-index:70}
+
+/* ---------- hero ---------- */
+#hero{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  padding:140px 4vw 80px;position:relative;overflow:hidden;
+}
+#hero .meta-row{
+  display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;
+  font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--grey);
+  border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:6vh;
+}
+#hero .meta-row b{color:var(--ink);font-weight:600}
+#hero h1{
+  font-family:var(--serif);font-weight:500;
+  font-size:clamp(38px,6.2vw,96px);line-height:1.18;letter-spacing:-.01em;
+  max-width:20ch;
+}
+#hero h1 .gold{color:var(--gold);font-weight:600}
+html[lang="en"] #hero h1{font-size:clamp(30px,4vw,62px);max-width:26ch;line-height:1.22}
+#hero .sub{
+  margin-top:5vh;display:flex;gap:6vw;flex-wrap:wrap;align-items:flex-start;
+}
+.hero-main{display:flex;gap:5vw;align-items:flex-start}
+.hero-main .hero-text{flex:1.15;min-width:0}
+#hero .sub p{max-width:44ch;font-size:15px;color:var(--ink-2)}
+#hero .sub .role{
+  font-size:11px;letter-spacing:.24em;text-transform:uppercase;font-weight:600;color:var(--gold);
+  border-left:2px solid var(--gold);padding-left:14px;line-height:2;
+}
+.hero-pic{flex:0 1 400px;margin-top:1.5vh}
+.hero-pic img{width:100%;display:block;border:1px solid var(--gold)}
+.hero-pic figcaption{font-size:11px;color:var(--grey);letter-spacing:.14em;margin-top:12px;line-height:1.9}
+.hero-pic figcaption b{color:var(--gold);font-weight:600}
+@media(max-width:960px){.hero-main{flex-direction:column}.hero-pic{max-width:420px}}
+#hero .scroll-hint{
+  position:absolute;bottom:34px;left:4vw;display:flex;align-items:center;gap:12px;
+  font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--grey);
+}
+#hero .scroll-hint .bar{width:1px;height:44px;background:var(--line);position:relative;overflow:hidden}
+#hero .scroll-hint .bar::after{
+  content:"";position:absolute;left:0;top:-100%;width:100%;height:100%;background:var(--gold);
+  animation:drip 1.8s var(--ease-circ) infinite;
+}
+@keyframes drip{0%{top:-100%}60%,100%{top:100%}}
+#hero .hero-num{
+  position:absolute;right:4vw;bottom:30px;text-align:right;
+  font-family:var(--serif);color:var(--gold);
+}
+#hero .hero-num .n{font-size:clamp(60px,8vw,120px);font-weight:600;line-height:1}
+#hero .hero-num .l{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--grey);font-family:var(--sans)}
+
+/* ---------- section scaffolding ---------- */
+section{padding:11vh 4vw;position:relative}
+.sec-head{display:flex;align-items:center;gap:26px;margin-bottom:7vh}
+.sec-head .no{font-family:var(--serif);font-size:15px;color:var(--gold);letter-spacing:.1em}
+.sec-head h2{font-family:var(--serif);font-weight:600;font-size:clamp(30px,3.6vw,54px);letter-spacing:-.01em}
+.sec-head .rule{flex:1;height:1px;background:var(--line)}
+
+/* reveal */
+.rv{opacity:0;transform:translateX(1rem)}
+.rv.on{animation:rvIn .8s var(--ease-dir) both}
+@keyframes rvIn{0%{opacity:0;transform:translateX(1rem)}100%{opacity:1;transform:translateX(0)}}
+
+/* ---------- stats / 業務規模 ---------- */
+#scale{background:var(--ink);color:var(--paper)}
+#scale .sec-head h2{color:var(--paper)}
+#scale .sec-head .rule{background:rgba(255,255,255,.18)}
+#scale .lede{max-width:62ch;color:#b9c3d4;font-size:15px;margin-bottom:6vh}
+#scale .lede b{color:var(--gold-soft);font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.14)}
+@media(max-width:960px){.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.stats{grid-template-columns:1fr}}
+.stat{background:var(--ink);padding:44px 34px;position:relative;transition:background .35s}
+.stat:hover{background:#0a2144}
+.stat .k{font-family:var(--serif);font-weight:600;font-size:clamp(44px,4.6vw,72px);line-height:1;color:var(--gold);font-feature-settings:"tnum" 1}
+.stat .k small{font-size:.42em;font-weight:500;margin-left:2px}
+.stat .t{margin-top:16px;font-size:15px;font-weight:600;letter-spacing:.04em}
+.stat .d{margin-top:8px;font-size:12.5px;color:#93a1b8;line-height:1.7}
+.stat::after{content:"";position:absolute;left:34px;bottom:0;height:2px;width:0;background:var(--gold);transition:width .5s var(--ease-circ)}
+.stat:hover::after{width:calc(100% - 68px)}
+.scale-strip{margin-top:6vh;display:flex;gap:0;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.14)}
+.scale-strip .cell{flex:1 1 220px;padding:26px 30px;border-right:1px solid rgba(255,255,255,.14)}
+.scale-strip .cell:last-child{border-right:none}
+.scale-strip .l{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#8b98ad}
+.scale-strip .v{font-family:var(--serif);font-size:24px;margin-top:8px;color:var(--paper)}
+.scale-strip .v em{font-style:normal;color:var(--gold)}
+
+/* ---------- cases 重點案例 ---------- */
+.case{
+  border-top:1px solid var(--line);
+  padding:44px 0 0;position:relative;cursor:pointer;
+}
+.case:last-of-type{border-bottom:1px solid var(--line)}
+.case .row{display:grid;grid-template-columns:70px 1.1fr 1.6fr 40px;gap:3vw;align-items:baseline}
+@media(max-width:960px){.case .row{grid-template-columns:44px 1fr 34px}.case .row .where{display:none}}
+.case .idx{font-family:var(--serif);color:var(--gold);font-size:18px}
+.case h3{font-family:var(--serif);font-weight:600;font-size:clamp(30px,3.4vw,52px);letter-spacing:-.01em;transition:color .3s}
+.case:hover h3{color:var(--gold)}
+.case .where{font-size:13px;color:var(--grey);line-height:1.9}
+.case .where b{color:var(--ink);font-weight:600;display:block;font-size:14px}
+.case .pm{
+  font-family:var(--serif);font-size:34px;color:var(--gold);justify-self:end;
+  transition:transform .4s var(--ease-circ);line-height:1;
+}
+.case.open .pm{transform:rotate(45deg)}
+.case .body{
+  max-height:0;overflow:hidden;opacity:0;
+  transition:max-height .65s var(--ease-circ),opacity .45s .05s;
+}
+.case.open .body{max-height:1100px;opacity:1}
+.case .body-in{padding:34px 0 50px  calc(70px + 3vw)}
+@media(max-width:960px){.case .body-in{padding-left:calc(44px + 3vw)}}
+.cmetrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);max-width:880px}
+@media(max-width:720px){.cmetrics{grid-template-columns:1fr}}
+.cmetrics .m{background:var(--paper);padding:22px 26px}
+.cmetrics .m .k{font-family:var(--serif);font-weight:600;font-size:32px;color:var(--gold);font-feature-settings:"tnum" 1;line-height:1.1}
+.cmetrics .m .t{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey);margin-top:8px}
+.case .bullets{margin-top:34px;max-width:880px;list-style:none}
+.case .bullets li{
+  font-size:14px;color:var(--ink-2);line-height:1.8;padding:10px 0 10px 24px;position:relative;
+  border-bottom:1px dashed var(--line);
+}
+.case .bullets li::before{content:"";position:absolute;left:2px;top:20px;width:8px;height:8px;background:var(--gold)}
+.case .clabel{margin-top:34px;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.case .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;max-width:980px}
+.case .chips span{
+  font-size:12.5px;padding:8px 16px;border:1px solid var(--line);color:var(--ink-2);
+  transition:border-color .3s,color .3s,background .3s;
+}
+.case .chips span:hover{border-color:var(--gold);color:#8a6d14;background:#fcf9ef}
+.case .chips span i{font-style:normal;color:var(--gold);margin-left:8px;font-size:11px}
+
+/* ---------- clients ---------- */
+#clients{background:var(--paper)}
+.marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:26px 0;margin-bottom:7vh;user-select:none}
+.marquee .track{display:flex;gap:64px;width:max-content;animation:mq 46s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+.marquee .track span{font-family:var(--serif);font-size:26px;font-weight:500;white-space:nowrap;color:var(--ink);display:flex;align-items:center;gap:64px}
+.marquee .track span::after{content:"";width:7px;height:7px;background:var(--gold);display:inline-block}
+@keyframes mq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+.filters{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:5vh}
+.chip{
+  font-size:12px;letter-spacing:.12em;font-weight:500;padding:9px 20px;
+  border:1px solid var(--ink);background:transparent;cursor:pointer;color:var(--ink);
+  font-family:var(--sans);transition:border-width .12s,background .25s,color .25s;
+}
+.chip:hover{border-width:2px}
+.chip.act{background:var(--ink);color:var(--gold-soft)}
+.chip .n{color:var(--gold);margin-left:6px;font-feature-settings:"tnum" 1}
+.chip.act .n{color:var(--gold-soft)}
+
+.cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+@media(max-width:1060px){.cgrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.cgrid{grid-template-columns:1fr}}
+.cc{background:var(--paper);padding:34px 30px 30px;position:relative;overflow:hidden;transition:background .35s}
+.cc::before{content:"";position:absolute;top:0;left:0;width:100%;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease-circ)}
+.cc:hover::before{transform:scaleX(1)}
+.cc:hover{background:#fcf9ef}
+.cc .stage{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.cc h3{font-family:var(--serif);font-size:26px;font-weight:600;margin:10px 0 4px;letter-spacing:-.01em}
+.cc .desc{font-size:13.5px;color:var(--ink-2);line-height:1.75;margin-top:12px;max-height:0;opacity:0;overflow:hidden;transition:max-height .5s var(--ease-circ),opacity .4s .05s}
+.cc:hover .desc{max-height:180px;opacity:1}
+.cc .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.cc .tags i{font-style:normal;font-size:10.5px;letter-spacing:.1em;padding:4px 10px;border:1px solid var(--line);color:var(--grey);transition:border-color .3s,color .3s}
+.cc:hover .tags i{border-color:var(--gold);color:#8a6d14}
+.cc .yr{position:absolute;top:30px;right:26px;font-size:11px;color:var(--grey);font-feature-settings:"tnum" 1;letter-spacing:.08em}
+.cc.hide{display:none}
+.cfoot{margin-top:4vh;font-size:12px;color:var(--grey);letter-spacing:.06em}
+.cfoot b{color:var(--gold);font-weight:600}
+
+/* ---------- others 其他經歷 ---------- */
+#others{background:var(--mist)}
+.olist{border-top:1px solid var(--line)}
+.orow{
+  display:grid;grid-template-columns:220px 1fr 2fr;gap:3vw;align-items:baseline;
+  padding:30px 0;border-bottom:1px solid var(--line);
+}
+@media(max-width:860px){.orow{grid-template-columns:1fr;gap:8px}}
+.orow .y{font-size:12px;letter-spacing:.16em;color:var(--grey);font-feature-settings:"tnum" 1}
+.orow .co{font-family:var(--serif);font-size:24px;font-weight:600}
+.orow .co small{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.14em;color:var(--gold);font-weight:600;margin-top:4px;text-transform:uppercase}
+.orow p{font-size:13.5px;color:var(--ink-2);line-height:1.8;max-width:64ch}
+
+/* ---------- expertise ---------- */
+.exp{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+@media(max-width:860px){.exp{grid-template-columns:1fr}}
+.ex{background:var(--paper);padding:40px 36px;transition:background .35s}
+.ex:hover{background:#fcf9ef}
+.ex .no{font-family:var(--serif);color:var(--gold);font-size:15px}
+.ex h3{font-family:var(--serif);font-size:24px;font-weight:600;margin:12px 0 10px}
+.ex p{font-size:13.5px;color:var(--ink-2);line-height:1.8}
+
+/* ---------- footer ---------- */
+footer{background:var(--ink);color:var(--paper);padding:10vh 4vw 6vh}
+footer .big{font-family:var(--serif);font-weight:500;font-size:clamp(30px,4.4vw,64px);line-height:1.25;max-width:22ch}
+footer .big a{color:var(--gold);border-bottom:1px solid var(--gold);transition:opacity .25s}
+footer .big a:hover{opacity:.7}
+footer .cols{display:flex;flex-wrap:wrap;gap:5vw;margin-top:8vh;padding-top:5vh;border-top:1px solid rgba(255,255,255,.16)}
+footer .cols .c .l{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:#8b98ad}
+footer .cols .c .v{margin-top:10px;font-size:14px;line-height:2}
+footer .cols .c .v a:hover{color:var(--gold)}
+footer .base{margin-top:8vh;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:11px;color:#8b98ad;letter-spacing:.14em}
+.edu{margin-top:6vh;display:flex;flex-wrap:wrap;gap:3vw}
+.edu .e{border:1px solid rgba(255,255,255,.2);padding:16px 22px}
+.edu .e .l{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.edu .e .v{font-size:13px;margin-top:6px;color:#c9d2e0}
+
+/* ---------- community ---------- */
+.comm{display:flex;gap:4vw;margin-top:6vh;align-items:flex-start;flex-wrap:wrap}
+.comm .talks{flex:1;min-width:300px;max-width:840px}
+.comm .talks .tl-head{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:22px}
+.comm .talk{padding:16px 0 16px 26px;border-left:2px solid var(--gold);position:relative}
+.comm .talk + .talk{border-top:1px solid rgba(255,255,255,.12)}
+.comm .talk::before{content:"";position:absolute;left:-6px;top:26px;width:10px;height:10px;background:var(--ink);border:2px solid var(--gold)}
+.comm .talk h4{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--paper)}
+.comm .talk p{font-size:12.5px;color:#93a1b8;margin-top:4px;letter-spacing:.04em}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<header id="hd">
+  <a class="brand" href="#hero"><span class="nm"><span class="zh" data-i18n="brand_zh">詹鈞淵</span><span class="en-name">Richard CHAN</span></span></a>
+  <nav>
+    <a href="#scale" data-i18n="nav_scale"></a>
+    <a href="#cases" data-i18n="nav_cases"></a>
+    <a href="#clients" data-i18n="nav_clients"></a>
+    <a href="#others" data-i18n="nav_others"></a>
+    <a href="#exp" data-i18n="nav_exp"></a>
+  </nav>
+  <div class="hd-right">
+    <div class="lang" id="langSwitch">
+      <button data-lang="zh-Hant">繁體</button><i>|</i>
+      <button data-lang="zh-Hans">简体</button><i>|</i>
+      <button data-lang="en">EN</button>
+    </div>
+    <a class="cta" href="#contact" data-i18n="nav_contact"></a>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section id="hero">
+  <div class="meta-row rv">
+    <span data-i18n="hero_meta1"></span>
+    <span data-i18n="hero_meta2"></span>
+    <span data-i18n="hero_meta3"></span>
+  </div>
+  <div class="hero-main">
+    <div class="hero-text">
+      <h1 class="rv" data-i18n="hero_h1"></h1>
+      <div class="sub">
+        <p class="rv" data-i18n="hero_sub"></p>
+        <div class="role rv" data-i18n="hero_role"></div>
+      </div>
+    </div>
+    <figure class="hero-pic rv">
+      <img src="community-talk.png" data-i18n-alt="hero_pic_alt">
+      <figcaption data-i18n="hero_cap"></figcaption>
+    </figure>
+  </div>
+  <div class="scroll-hint"><span class="bar"></span><span data-i18n="hero_scroll"></span></div>
+  <div class="hero-num tnum">
+    <div class="n">25<span style="font-size:.45em">+</span></div>
+    <div class="l" data-i18n="hero_num_l"></div>
+  </div>
+</section>
+
+<!-- ================= SCALE ================= -->
+<section id="scale">
+  <div class="sec-head">
+    <span class="no">01</span><h2 data-i18n="scale_h2"></h2><div class="rule"></div><div class="sq9 rev"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+  <p class="lede rv" data-i18n="scale_lede"></p>
+  <div class="stats">
+    <div class="stat rv"><div class="k tnum"><span class="cnt" data-to="39">0</span><small>M+</small></div><div class="t" data-i18n="st1t"></div><div class="d" data-i18n="st1d"></div></div>
+    <div class="stat rv"><div class="k tnum"><span class="cnt" data-to="350">0</span><small>+</small></div><div class="t" data-i18n="st2t"></div><div class="d" data-i18n="st2d"></div></div>
+    <div class="stat rv"><div class="k tnum"><span class="cnt" data-to="60">0</span><small>%</small></div><div class="t" data-i18n="st3t"></div><div class="d" data-i18n="st3d"></div></div>
+    <div class="stat rv"><div class="k tnum"><span class="cnt" data-to="20">0</span><small>+</small></div><div class="t" data-i18n="st4t"></div><div class="d" data-i18n="st4d"></div></div>
+  </div>
+  <div class="scale-strip rv">
+    <div class="cell"><div class="l" data-i18n="strip1l"></div><div class="v tnum" data-i18n="strip1v"></div></div>
+    <div class="cell"><div class="l" data-i18n="strip2l"></div><div class="v tnum" data-i18n="strip2v"></div></div>
+    <div class="cell"><div class="l" data-i18n="strip3l"></div><div class="v" data-i18n="strip3v"></div></div>
+  </div>
+</section>
+
+<!-- ================= CASES ================= -->
+<section id="cases">
+  <div class="sec-head">
+    <div class="sq9"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="no">02</span><h2 data-i18n="cases_h2"></h2><div class="rule"></div>
+  </div>
+  <div id="caseWrap"></div>
+  <p class="cfoot" data-i18n="cases_note"></p>
+</section>
+
+<!-- ================= CLIENTS ================= -->
+<section id="clients">
+  <div class="sec-head">
+    <span class="no">03</span><h2 data-i18n="clients_h2"></h2><div class="rule"></div><div class="sq9 ink"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+
+  <div class="marquee" aria-hidden="true"><div class="track" id="mq"></div></div>
+
+  <div class="filters" id="filters"></div>
+  <div class="cgrid" id="cgrid"></div>
+  <p class="cfoot" data-i18n-html="clients_note"></p>
+</section>
+
+<!-- ================= OTHERS ================= -->
+<section id="others">
+  <div class="sec-head">
+    <span class="no">04</span><h2 data-i18n="others_h2"></h2><div class="rule"></div><div class="sq9 ink"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+  <div class="olist" id="otherList"></div>
+</section>
+
+<!-- ================= EXPERTISE ================= -->
+<section id="exp">
+  <div class="sec-head">
+    <div class="sq9"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="no">05</span><h2 data-i18n="exp_h2"></h2><div class="rule"></div>
+  </div>
+  <div class="exp" id="expGrid"></div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer id="contact">
+  <div class="big" data-i18n="ft_big"></div>
+  <div class="cols">
+    <div class="c"><div class="l">Email</div><div class="v"><a href="mailto:Richard.Jan@gmail.com">Richard.Jan@gmail.com</a></div></div>
+    <div class="c"><div class="l" data-i18n="ft_tw_l"></div><div class="v tnum">+886 917 809 677</div></div>
+    <div class="c"><div class="l" data-i18n="ft_cn_l"></div><div class="v tnum">+86 186 2139 0321</div></div>
+    <div class="c"><div class="l" data-i18n="ft_lang_l"></div><div class="v" data-i18n="ft_lang_v"></div></div>
+  </div>
+  <div class="comm rv">
+    <div class="talks" id="talkList">
+      <div class="tl-head" data-i18n="comm_head"></div>
+    </div>
+  </div>
+  <div class="edu">
+    <div class="e"><div class="l" data-i18n="edu_cert_l"></div><div class="v" data-i18n="edu_cert_v"></div></div>
+  </div>
+  <div class="base">
+    <span>© 2026 Richard CHAN</span>
+    <span>Shanghai / Taipei</span>
+  </div>
+</footer>
+<script>
+/* ================= I18N ================= */
+const TR = {
+'zh-Hant': {
+  brand_zh:'詹鈞淵',
+  meta_title:'詹鈞淵 Richard Chan — 保險科技策略與交付顧問',
+  nav_scale:'業務規模', nav_cases:'重點案例', nav_clients:'服務客戶', nav_others:'其他經歷', nav_exp:'專業領域', nav_contact:'聯絡方式',
+  hero_meta1:'<b>保險科技策略顧問</b> · 數字化及 IT 策略',
+  hero_meta2:'上海 <b>/</b> 台北',
+  hero_meta3:'25+ 年兩岸 IT 交付經驗',
+  hero_h1:'把 <span class="gold">20 多家</span>保險與金融機構的數位化經驗，轉化成<span class="gold">科技轉型成功的基石</span>',
+  hero_sub:'深耕壽險、產險與養老金市場 25 年，橫跨甲乙方的雙重視角——從 IT 策略規劃、核心系統建置、數據平台到 IFRS 17 合規，帶領數百人的跨職能團隊，交付可預測、可獲利、高品質的大型專案',
+  hero_role:'端到端 IT 服務<br>數位轉型策略<br>系統整合與交付管理<br>跨區域團隊管理',
+  hero_scroll:'向下探索',
+  hero_num_l:'Years of Delivery',
+  hero_pic_alt:'阿里巴巴雲棲大會金融分會演講',
+  hero_cap:'阿里巴巴雲棲大會 · 金融分會<br><b>主講人 · 2022</b>',
+  scale_h2:'業務規模',
+  scale_lede:'數字會說話<br>以下是在 Accenture 與 IBM 任職期間直接帶領、交付或共同創造的業務規模——<b>從一個財政年度內 60% 的團隊成長，到一年 3,900 萬美元的金融服務營收</b>',
+  st1t:'美元年營收', st1d:'領導 350+ 人金融服務團隊，締造 US$39M 年度營收（Accenture）',
+  st2t:'團隊成員', st2d:'單一財政年度內帶領 350+ 人跨職能團隊，人數成長 60%',
+  st3t:'一年內成長率', st3d:'金融服務團隊人數於一個財政年度內成長 60%',
+  st4t:'服務機構', st4d:'兩岸三地及越南，涵蓋壽險、產險、養老金與銀行',
+  strip1l:'團隊擴編（IBM / 6 個月）', strip1v:'70 <em>→</em> 130+ 人',
+  strip2l:'顧問團隊規模（IBM）', strip2v:'30+ 顧問 · 70+ 工程師',
+  strip3l:'服務市場', strip3v:'中國大陸 · 台灣 · 越南',
+  cases_h2:'重點案例',
+  cases_clients:'代表客戶',
+  cases_note:'點選任一段經歷展開交付細節與代表客戶 · 三段經歷涵蓋 2023 迄今、2020–2023、2012–2020',
+  clients_h2:'服務客戶',
+  clients_note:'將游標停留在客戶名稱上可查看交付內容 · 共 <b id="ctotal"></b> 家機構 · 點選上方標籤可依任職階段篩選',
+  others_h2:'其他經歷',
+  exp_h2:'專業領域',
+  ft_big:'讓下一次的科技轉型，<br>成為<a href="mailto:Richard.Jan@gmail.com">可預測的未來</a>',
+  ft_tw_l:'台灣', ft_cn_l:'中國大陸', ft_lang_l:'語言', ft_lang_v:'中文（流利）· English',
+  comm_head:'Community · 社群與演講',
+  edu_cert_l:'認證',
+  edu_cert_v:'復旦大學認證客座講師 · AIG Management Associate（2007）· 壽險業務員證照（2006）· FLMI（2004）'
+},
+'zh-Hans': {
+  brand_zh:'詹钧渊',
+  meta_title:'詹钧渊 Richard Chan — 保险科技策略与交付顾问',
+  nav_scale:'业务规模', nav_cases:'重点案例', nav_clients:'服务客户', nav_others:'其他经历', nav_exp:'专业领域', nav_contact:'联系方式',
+  hero_meta1:'<b>保险科技策略顾问</b> · 数字化及 IT 策略',
+  hero_meta2:'上海 <b>/</b> 台北',
+  hero_meta3:'25+ 年两岸 IT 交付经验',
+  hero_h1:'把 <span class="gold">20 多家</span>保险与金融机构的数字化经验，转化成<span class="gold">科技转型成功的基石</span>',
+  hero_sub:'深耕寿险、产险与养老金市场 25 年，横跨甲乙方的双重视角——从 IT 策略规划、核心系统建置、数据平台到 IFRS 17 合规，带领数百人的跨职能团队，交付可预测、可获利、高品质的大型项目',
+  hero_role:'端到端 IT 服务<br>数字化转型策略<br>系统整合与交付管理<br>跨区域团队管理',
+  hero_scroll:'向下探索',
+  hero_num_l:'Years of Delivery',
+  hero_pic_alt:'阿里巴巴云栖大会金融分会演讲',
+  hero_cap:'阿里巴巴云栖大会 · 金融分会<br><b>主讲人 · 2022</b>',
+  scale_h2:'业务规模',
+  scale_lede:'数字会说话<br>以下是在 Accenture 与 IBM 任职期间直接带领、交付或共同创造的业务规模——<b>从一个财政年度内 60% 的团队成长，到一年 3,900 万美元金融服务营收</b>',
+  st1t:'美元年营收', st1d:'带领 350+ 人金融服务团队，缔造 US$39M 年度营收（Accenture）',
+  st2t:'团队成员', st2d:'单一财政年度内带领 350+ 人跨职能团队，人数成长 60%',
+  st3t:'一年内成长率', st3d:'金融服务团队人数于一个财政年度内成长 60%',
+  st4t:'服务机构', st4d:'两岸三地及越南，涵盖寿险、产险、养老金与银行',
+  strip1l:'团队扩编（IBM / 6 个月）', strip1v:'70 <em>→</em> 130+ 人',
+  strip2l:'顾问团队规模（IBM）', strip2v:'30+ 顾问 · 70+ 工程师',
+  strip3l:'服务市场', strip3v:'中国大陆 · 中国台湾 · 越南',
+  cases_h2:'重点案例',
+  cases_clients:'代表客户',
+  cases_note:'点选任一段经历展开交付细节与代表客户 · 三段经历涵盖 2023 迄今、2020–2023、2012–2020',
+  clients_h2:'服务客户',
+  clients_note:'将光标停留在客户名称上可查看交付内容 · 共 <b id="ctotal"></b> 家机构 · 点选上方标签可依任职阶段筛选',
+  others_h2:'其他经历',
+  exp_h2:'专业领域',
+  ft_big:'让下一次的科技转型，<br>成为<a href="mailto:Richard.Jan@gmail.com">可预测的未来</a>',
+  ft_tw_l:'中国台湾', ft_cn_l:'中国大陆', ft_lang_l:'语言', ft_lang_v:'中文（流利）· English',
+  comm_head:'Community · 社群与演讲',
+  edu_cert_l:'认证',
+  edu_cert_v:'复旦大学认证客座讲师 · AIG Management Associate（2007）· 寿险业务员证照（2006）· FLMI（2004）'
+},
+'en': {
+  brand_zh:'詹鈞淵',
+  meta_title:'Richard Chan — Insurance Technology Strategy & Delivery Advisor',
+  nav_scale:'Scale', nav_cases:'Case Highlights', nav_clients:'Clients', nav_others:'Earlier Career', nav_exp:'Expertise', nav_contact:'Contact',
+  hero_meta1:'<b>Insurance Technology Advisor</b> · Digital & IT Strategy',
+  hero_meta2:'Shanghai <b>/</b> Taipei',
+  hero_meta3:'25+ Years of Cross-Strait IT Delivery',
+  hero_h1:'Turning the digital experience of <span class="gold">20+ insurance and financial institutions</span> into the <span class="gold">cornerstone of successful technology transformation</span>',
+  hero_sub:'25 years across life, P&C and pension insurance — a dual perspective from both client and vendor sides. From IT strategy planning, core system implementation and data platforms to IFRS 17 compliance, leading cross-functional teams of hundreds to deliver predictable, profitable, high-quality programs',
+  hero_role:'End-to-End IT Services<br>Digital Transformation Strategy<br>System Integration & Delivery<br>Cross-Regional Team Management',
+  hero_scroll:'Scroll',
+  hero_num_l:'Years of Delivery',
+  hero_pic_alt:'Keynote at Alibaba Cloud Apsara Conference, Financial Forum',
+  hero_cap:'Alibaba Cloud Apsara Conference · Financial Forum<br><b>Keynote Speaker · 2022</b>',
+  scale_h2:'Business Scale',
+  scale_lede:'The numbers speak<br>Business scale led, delivered or co-created during my tenure at Accenture and IBM — <b>from 60% team growth within a single fiscal year to US$39M in annual financial-services revenue</b>',
+  st1t:'Annual Revenue (US$)', st1d:'Led a 350+ financial-services team to US$39M annual revenue (Accenture)',
+  st2t:'Team Members', st2d:'Led a 350+ cross-functional team within a single fiscal year, growing headcount 60%',
+  st3t:'Growth in One Year', st3d:'Financial services team grew 60% within one fiscal year',
+  st4t:'Client Institutions', st4d:'Across Greater China and Vietnam — life, P&C, pension and banking',
+  strip1l:'Team Growth (IBM / 6 Months)', strip1v:'70 <em>→</em> 130+ People',
+  strip2l:'Consulting Team (IBM)', strip2v:'30+ Consultants · 70+ Engineers',
+  strip3l:'Markets', strip3v:'China · Taiwan · Vietnam',
+  cases_h2:'Case Highlights',
+  cases_clients:'Key Clients',
+  cases_note:'Click any experience to expand delivery details and key clients · covering 2023–present, 2020–2023, 2012–2020',
+  clients_h2:'Clients Served',
+  clients_note:'Hover over a client to see the engagement · <b id="ctotal"></b> institutions · use the tags above to filter by career stage',
+  others_h2:'Earlier Career',
+  exp_h2:'Expertise',
+  ft_big:'Make the next technology transformation<br>a <a href="mailto:Richard.Jan@gmail.com">predictable future</a>',
+  ft_tw_l:'Taiwan', ft_cn_l:'China', ft_lang_l:'Languages', ft_lang_v:'Mandarin (Fluent) · English',
+  comm_head:'Community · Talks & Lectures',
+  edu_cert_l:'Certifications',
+  edu_cert_v:'Certified Guest Lecturer, Fudan University · AIG Management Associate (2007) · Life Insurance Agent License (2006) · FLMI (2004)'
+}};
+
+const STAGES = {
+'zh-Hant': {indep:'獨立顧問', acc:'Accenture 時期', ibm:'IBM 時期', other:'其他經歷'},
+'zh-Hans': {indep:'独立顾问', acc:'Accenture 时期', ibm:'IBM 时期', other:'其他经历'},
+'en':      {indep:'Independent', acc:'Accenture Years', ibm:'IBM Years', other:'Earlier Career'}};
+
+const ALL_LABEL = {'zh-Hant':'全部機構','zh-Hans':'全部机构','en':'All Institutions'};
+
+const TALKS = {
+'zh-Hant': [
+  ['阿里巴巴雲棲大會金融分會 主講人','2022 · 金融業數字化轉型主題演講'],
+  ['亞洲數字化保險決策者論壇 主講人','2020 · Digital Insurance Asia'],
+  ['華為金融科技論壇 圓桌會議主講人','2020 · 金融科技與保險數字化圓桌'],
+  ['第四屆保險創新大會 主講人','2019 · Digital Reinvent Insurance'],
+  ['復旦大學 MSE 學院 客座講師','2017 – 2018 · 保險核心轉型、數位保險策略規劃']],
+'zh-Hans': [
+  ['阿里巴巴云栖大会金融分会 主讲人','2022 · 金融业数字化转型主题演讲'],
+  ['亚洲数字化保险决策者论坛 主讲人','2020 · Digital Insurance Asia'],
+  ['华为金融科技论坛 圆桌会议主讲人','2020 · 金融科技与保险数字化圆桌'],
+  ['第四届保险创新大会 主讲人','2019 · Digital Reinvent Insurance'],
+  ['复旦大学 MSE 学院 客座讲师','2017 – 2018 · 保险核心转型、数字保险策略规划']],
+'en': [
+  ['Alibaba Cloud Apsara Conference — Financial Forum, Keynote Speaker','2022 · Digital transformation in financial services'],
+  ['Asia Digital Insurance Decision Makers Forum, Keynote Speaker','2020 · Digital Insurance Asia'],
+  ['Huawei Fintech Forum, Roundtable Speaker','2020 · Fintech & insurance digitalization roundtable'],
+  ['4th Insurance Innovation Congress, Keynote Speaker','2019 · Digital Reinvent Insurance'],
+  ['Fudan University MSE School, Guest Lecturer','2017 – 2018 · Core insurance transformation, digital insurance strategy']]};
+
+const EXPS = {
+'zh-Hant': [
+  ['A —','金融科技策略與企業架構','為壽險、產險與養老金客戶設計 IT 策略、優化營運流程、建立企業架構；主導 IT 產品開發、系統設計與實施，提前因應產業挑戰'],
+  ['B —','保險 IT 解決方案交付','壽險、產險、養老金端到端解決方案交付，涵蓋系統架構、開發、數據轉換與系統整合，確保監管合規與業務連續性'],
+  ['C —','數位與數據驅動方案','主導 IFRS 17 數據平台、消費者／通路數據方案與數位轉型計畫，以數據提升保險業務效率與客戶洞察'],
+  ['D —','大型團隊與多供應商管理','領導跨職能、在岸／離岸團隊與多供應商合作夥伴關係，驅動可持續的團隊成長與營運卓越，兼顧業務拓展與交付品質']],
+'zh-Hans': [
+  ['A —','金融科技策略与企业架构','为寿险、产险与养老金客户设计 IT 策略、优化营运流程、建立企业架构；主导 IT 产品开发、系统设计与实施，提前因应产业挑战'],
+  ['B —','保险 IT 解决方案交付','寿险、产险、养老金端到端解决方案交付，涵盖系统架构、开发、数据转换与系统整合，确保监管合规与业务连续性'],
+  ['C —','数字与数据驱动方案','主导 IFRS 17 数据平台、消费者／通路数据方案与数字化转型计划，以数据提升保险业务效率与客户洞察'],
+  ['D —','大型团队与多供应商管理','领导跨职能、在岸／离岸团队与多供应商合作伙伴关系，驱动可持续的团队成长与营运卓越，兼顾业务拓展与交付品质']],
+'en': [
+  ['A —','FinTech Strategy & Enterprise Architecture','Design IT strategies, optimize operations and build enterprise architecture for life, P&C and pension clients; lead IT product development, system design and implementation — anticipating industry challenges ahead of time'],
+  ['B —','Insurance IT Solution Delivery','End-to-end delivery for life, P&C and pension — spanning system architecture, development, data conversion and integration — ensuring regulatory compliance and business continuity'],
+  ['C —','Digital & Data-Driven Solutions','Led IFRS 17 data platforms, consumer/agency data solutions and digital transformation programs that raise insurance efficiency and customer insight'],
+  ['D —','Large-Scale Team & Multi-Vendor Management','Lead cross-functional onshore/offshore teams and multi-vendor partnerships, driving sustainable team growth and operational excellence across business development and delivery']]};
+
+const OTHERS = {
+'zh-Hant': [
+  ['2009.10 — 2012.04 · 上海','易保科技 eBaoTech','專案經理','管理壽險專案的接案、實施與維護，年度營收超過 100 萬美元；以保險業務顧問身分提供需求分析、方案設計、建置、測試與部署的端到端服務代表客戶：吉祥人壽（長沙核心系統實施）、富邦人壽（越南核心系統部署，台灣跨區支援）'],
+  ['2003.06 — 2009.09 · 台北 / 廣州','南山人壽 Nanshan Life','前 AIG 成員 · 資深系統設計師 / 功能經理','以客戶端視角累積保險核心系統實戰：率領 10+ 人團隊將 IT 服務從廣州遷移至台北，確保業務零中斷，成功交付核心保險系統轉型；督導核心模組系統設計並帶領功能團隊執行開發與測試此段客戶端經歷奠定日後顧問工作的雙重视角'],
+  ['2000.11 — 2003.06 · 台北','華經資訊 Fortune Information Systems','系統工程師 / 資深系統工程師','職涯起點，累積保險核心系統開發與維護的工程實戰基礎']],
+'zh-Hans': [
+  ['2009.10 — 2012.04 · 上海','易保科技 eBaoTech','项目经理','管理寿险专案的接案、实施与维护，年度营收超过 100 万美元；以保险业务顾问身份提供需求分析、方案设计、建置、测试与部署的端到端服务代表客户：吉祥人寿（长沙核心系统实施）、富邦人寿（越南核心系统部署，中国台湾跨区域支援）'],
+  ['2003.06 — 2009.09 · 台北 / 广州','南山人寿 Nanshan Life','前 AIG 成员 · 资深系统设计师 / 功能经理','以客户端视角累积保险核心系统实战：率领 10+ 人团队将 IT 服务从广州迁移至台北，确保业务零中断，成功交付核心保险系统转型；督导核心模块系统设计并带领功能团队执行开发与测试此段客户端经历奠定日后顾问工作的双重视角'],
+  ['2000.11 — 2003.06 · 台北','华经资讯 Fortune Information Systems','系统工程师 / 资深系统工程师','职业生涯起点，累积保险核心系统开发与维护的工程实战基础']],
+'en': [
+  ['Oct 2009 — Apr 2012 · Shanghai','eBaoTech','Project Manager','Managed life insurance projects across engagement, implementation and maintenance, generating over US$1M in annual revenue; served as an insurance business consultant covering requirements analysis, solution design, build, testing and deployment. Key clients: Ji Xiang Life (core system implementation, Changsha) and Fubon Life (core system deployment in Vietnam, cross-region support from Taiwan)'],
+  ['Jun 2003 — Sep 2009 · Taipei / Guangzhou','Nanshan Life','Former AIG member · Senior System Designer / Function Manager','Built hands-on core insurance system expertise from the client side: led a 10+ member team migrating IT services from Guangzhou to Taipei with zero business disruption, delivering core system transformation; supervised core module design and led functional teams through development and testing. This client-side experience underpins a dual client-vendor perspective'],
+  ['Nov 2000 — Jun 2003 · Taipei','Fortune Information Systems','System Engineer / Senior System Engineer','Career foundation: engineering practice in insurance core system development and maintenance']]};
+
+const CASES = {
+'zh-Hant': [
+  { idx:'02.1', co:'Accenture 大中華區', role:'董事總經理 · 金融服務業務主管', en:'Managing Director, Financial Services Lead',
+    period:'2020.04 — 2023.04', loc:'上海',
+    metrics:[['US$39M','年度營收'],['350+','團隊成員'],['60%','一年內成長']],
+    bullets:['統籌金融服務團隊損益（P&L），領導 350+ 人跨職能團隊，於一個財政年度內達成 60% 人數成長','帶領團隊為保險與銀行客戶交付技術服務，設計數據驅動的技術方案與業務系統，支援客戶數位轉型','主導關鍵資產開發：發布 IFRS 17 數據平台、打造消費者／通路數據驅動方案，並帶領養老與健康業務系統規劃'],
+    clients:[['ERGO 安顧人壽','現況評估'],['太保壽險','核心系統路線圖'],['大都會人壽','IFRS 17 實施'],['中華聯合保險','數據平台策略'],['友邦人壽','客戶 DataMart'],['匯豐中國','數據平台'],['浦發銀行','雲端業務重塑']]},
+  { idx:'02.2', co:'IBM 中國大陸', role:'雲端應用創新（CAI）保險業務負責人', en:'Insurance Practice Leader, Cloud Application Innovation',
+    period:'2012.04 — 2020.04', loc:'上海',
+    metrics:[['70→130+','人 · 6 個月擴編'],['30+','保險顧問'],['10','服務機構']],
+    bullets:['管理 30+ 保險顧問與 70+ 技術實踐團隊，負責保險業解決方案設計與專案交付的端到端管理','六個月內將團隊從 70+ 擴編至 130+，同步驅動業務開發，擴大 IBM 在保險產業的市場版圖','交付範圍涵蓋核心系統規劃與實施、IT 策略規劃（ITSP）、應用架構、測試 COE 與 PMO 服務'],
+    clients:[['太保集團','壽險／產險核心系統'],['建信人壽','數位平台策略'],['中國人保','架構設計・ITSP'],['中華聯合人壽','ITSP'],['美亞保險','測試 COE'],['史帶保險','核心系統 PMO'],['中國人壽養老','核心系統需求'],['安邦（大家）集團','ITSP'],['吉祥人壽','ITSP・核心系統'],['明台產險','IT 創新']]},
+  { idx:'02.3', co:'獨立顧問', role:'數字化及 IT 策略顧問', en:'Digital & IT Strategy Advisor',
+    period:'2023.06 — 迄今', loc:'上海 / 台北',
+    metrics:[['4','轉型維度'],['1','策略框架'],['20+','服務機構']],
+    bullets:['與台灣最大壽險公司合作制定 IT 策略框架，設計優化的 IT 組織架構，讓科技能力對齊長期業務目標','成功推動客戶團隊在技術創新、組織、業務與文化四個層面完成有效轉型'],
+    clients:[['台灣最大壽險公司','IT 策略框架・組織優化・全面轉型']]}],
+'zh-Hans': [
+  { idx:'02.1', co:'Accenture 大中华区', role:'董事总经理 · 金融服务业务主管', en:'Managing Director, Financial Services Lead',
+    period:'2020.04 — 2023.04', loc:'上海',
+    metrics:[['US$39M','年度营收'],['350+','团队成员'],['60%','一年内成长']],
+    bullets:['统筹金融服务团队损益（P&L），领导 350+ 人跨职能团队，于一个财政年度内达成 60% 人数成长','带领团队为保险与银行客户交付技术服务，设计数据驱动的技术方案与业务系统，支援客户数字化转型','主导关键资产开发：发布 IFRS 17 数据平台、打造消费者／通路数据驱动方案，并带领养老与健康业务系统规划'],
+    clients:[['ERGO 安顾人寿','现况评估'],['太保寿险','核心系统路线图'],['大都会人寿','IFRS 17 实施'],['中华联合保险','数据平台策略'],['友邦人寿','客户 DataMart'],['汇丰中国','数据平台'],['浦发银行','云端业务重塑']]},
+  { idx:'02.2', co:'IBM 中国大陆', role:'云端应用创新（CAI）保险业务负责人', en:'Insurance Practice Leader, Cloud Application Innovation',
+    period:'2012.04 — 2020.04', loc:'上海',
+    metrics:[['70→130+','人 · 6 个月扩编'],['30+','保险顾问'],['10','服务机构']],
+    bullets:['管理 30+ 保险顾问与 70+ 技术实践团队，负责保险业解决方案设计与专案交付的端到端管理','六个月内将团队从 70+ 扩编至 130+，同步驱动业务开发，扩大 IBM 在保险产业的市场版图','交付范围涵盖核心系统规划与实施、IT 策略规划（ITSP）、应用架构、测试 COE 与 PMO 服务'],
+    clients:[['太保集团','寿险／产险核心系统'],['建信人寿','数字平台策略'],['中国人保','架构设计・ITSP'],['中华联合人寿','ITSP'],['美亚保险','测试 COE'],['史带保险','核心系统 PMO'],['中国人寿养老','核心系统需求'],['安邦（大家）集团','ITSP'],['吉祥人寿','ITSP・核心系统'],['明台产险','IT 创新']]},
+  { idx:'02.3', co:'独立顾问', role:'数字化及 IT 策略顾问', en:'Digital & IT Strategy Advisor',
+    period:'2023.06 — 迄今', loc:'上海 / 台北',
+    metrics:[['4','转型维度'],['1','策略框架'],['20+','服务机构']],
+    bullets:['与中国台湾最大寿险公司合作制定 IT 策略框架，设计优化的 IT 组织架构，让科技能力对齐长期业务目标','成功推动客户团队在技术创新、组织、业务与文化四个层面完成有效转型'],
+    clients:[['中国台湾最大寿险公司','IT 策略框架・组织优化・全面转型']]}],
+'en': [
+  { idx:'02.1', co:'Accenture Greater China', role:'Managing Director · Financial Services Lead', en:'Managing Director, Financial Services Sector Lead',
+    period:'Apr 2020 — Apr 2023', loc:'Shanghai',
+    metrics:[['US$39M','Annual Revenue'],['350+','Team Members'],['60%','Growth in One Year']],
+    bullets:['Owned P&L for the Financial Services practice, leading a 350+ member cross-functional team to 60% headcount growth within a single fiscal year','Led delivery of technology services for insurance and banking clients, designing data-driven solutions and business systems that support digital transformation','Drove key asset development: launched the IFRS 17 data platform, built consumer/agency data-driven solutions, and led pension & health business system planning'],
+    clients:[['ERGO Life','As-is assessment'],['CPIC Life','Core system roadmap'],['MET Life','IFRS 17 implementation'],['China United Insurance','Data platform strategy'],['AIA','Customer DataMart'],['HSBC China','Data platform'],['SPDB','Cloud business redesign']]},
+  { idx:'02.2', co:'IBM China', role:'Insurance Practice Leader, Cloud Application Innovation (CAI)', en:'Insurance Practice Leader, CAI',
+    period:'Apr 2012 — Apr 2020', loc:'Shanghai',
+    metrics:[['70→130+','people in 6 months'],['30+','insurance consultants'],['10','client institutions']],
+    bullets:['Managed 30+ insurance consultants and 70+ technical practitioners, owning end-to-end insurance solution design and project delivery','Grew the team from 70+ to 130+ within six months while driving business development to expand IBM\u2019s insurance footprint','Delivery spanned core system planning & implementation, IT strategy planning (ITSP), application architecture, testing COE and PMO services'],
+    clients:[['CPIC Group','Life/P&C core systems'],['CCB Life','Digital platform strategy'],['PICC','Architecture & ITSP'],['China United Life','ITSP'],['AIG','Testing COE'],['STARR Insurance','Core system PMO'],['China Life Pension','Core system requirements'],['An Bang (Da Jia) Group','ITSP'],['Ji Xiang Life','ITSP & core system'],['MSIG Ming Tai','IT innovation']]},
+  { idx:'02.3', co:'Independent Advisor', role:'Digital & IT Strategy Advisor', en:'Executive Advisor & Business Partner',
+    period:'Jun 2023 — Present', loc:'Shanghai / Taipei',
+    metrics:[['4','transformation dimensions'],['1','strategy framework'],['20+','institutions served']],
+    bullets:['Partnered with Taiwan\u2019s largest life insurer to develop an IT strategy framework and design an optimized IT organizational structure, aligning technology with long-term business goals','Championed the client\u2019s transformation across four dimensions: technology innovation, organization, business, and culture'],
+    clients:[["Taiwan's Largest Life Insurer",'IT strategy · org design · transformation']]}]};
+
+const CLIENTS = {
+'zh-Hant': [
+  {n:'台灣最大壽險公司', y:'2023–', s:'indep', t:['IT 策略框架','組織設計'], d:'合作制定 IT 策略框架、設計優化的 IT 組織架構，並推動客戶團隊在技術創新、組織、業務與文化四個層面有效轉型'},
+  {n:'ERGO 安顧人壽', y:'2020–23', s:'acc', t:['現況評估'], d:'IT 現況評估（As-Is 分析），識別優化機會並提出改善路徑'},
+  {n:'太保壽險', y:'2020–23', s:'acc', t:['核心系統','路線圖規劃'], d:'集團核心系統路線圖規劃與架構設計，對齊長期業務目標'},
+  {n:'太保集團', y:'2012–20', s:'ibm', t:['核心系統'], d:'壽險核心系統規劃，以及產險核心系統端到端實施'},
+  {n:'大都會人壽', y:'2020–23', s:'acc', t:['IFRS 17'], d:'IFRS 17 系統端到端實施，確保監管合規與財務報告就緒'},
+  {n:'中華聯合保險', y:'2020–23', s:'acc', t:['數據平台'], d:'數據平台策略設計與框架開發，建立企業級數據能力'},
+  {n:'中華聯合人壽', y:'2012–20', s:'ibm', t:['ITSP'], d:'IT 策略規劃（ITSP），讓科技能力與業務優先級對齊'},
+  {n:'友邦人壽', y:'2020–23', s:'acc', t:['數據平台'], d:'客戶 DataMart 設計與部署，強化客戶數據分析與精準行銷'},
+  {n:'匯豐中國', y:'2020–23', s:'acc', t:['數據平台'], d:'數據平台設計與實施，提升數據治理水平'},
+  {n:'浦發銀行', y:'2020–23', s:'acc', t:['雲端轉型'], d:'基於雲端技術的銀行業務模式重塑，支援數位化核心戰略'},
+  {n:'建信人壽', y:'2012–20', s:'ibm', t:['數位平台','策略規劃'], d:'網路業務策略規劃與數位平台設計，拓展線上保險業務'},
+  {n:'中國人保', y:'2012–20', s:'ibm', t:['架構設計','ITSP'], d:'應用架構設計服務，以及壽險 IT 策略規劃（ITSP）'},
+  {n:'美亞保險', y:'2012–20', s:'ibm', t:['測試 COE','外包管理'], d:'應用管理與測試卓越中心（COE）建立與管理，及測試服務外包'},
+  {n:'史帶保險', y:'2012–20', s:'ibm', t:['PMO'], d:'核心系統 PMO 專案管理辦公室服務，確保大型專案對齊與落地'},
+  {n:'中國人壽養老', y:'2012–20', s:'ibm', t:['核心系統'], d:'核心系統需求管理與驗證，保障養老金業務系統品質'},
+  {n:'安邦（大家）保險集團', y:'2012–20', s:'ibm', t:['ITSP'], d:'集團層級 IT 策略規劃（ITSP）制定'},
+  {n:'吉祥人壽', y:'2009–20', s:'ibm', t:['ITSP','核心系統'], d:'IT 策略規劃（ITSP）開發，以及核心保險系統實施（長沙）'},
+  {n:'明台產險', y:'2012–20', s:'ibm', t:['數位創新'], d:'IT 創新計畫設計與實施，驅動產險數位創新'},
+  {n:'富邦人壽（越南）', y:'2009–12', s:'other', t:['核心系統'], d:'核心保險系統部署，由台灣提供跨區域支援'},
+  {n:'南山人壽', y:'2003–09', s:'other', t:['核心系統轉型'], d:'以客戶端視角主導核心保險系統轉型；率 10+ 人團隊完成廣州至台北 IT 服務遷移，業務零中斷'}],
+'zh-Hans': [
+  {n:'中国台湾最大寿险公司', y:'2023–', s:'indep', t:['IT 策略框架','组织设计'], d:'合作制定 IT 策略框架、设计优化的 IT 组织架构，并推动客户团队在技术创新、组织、业务与文化四个层面有效转型'},
+  {n:'ERGO 安顾人寿', y:'2020–23', s:'acc', t:['现况评估'], d:'IT 现况评估（As-Is 分析），识别优化机会并提出改善路径'},
+  {n:'太保寿险', y:'2020–23', s:'acc', t:['核心系统','路线图规划'], d:'集团核心系统路线图规划与架构设计，对齐长期业务目标'},
+  {n:'太保集团', y:'2012–20', s:'ibm', t:['核心系统'], d:'寿险核心系统规划，以及产险核心系统端到端实施'},
+  {n:'大都会人寿', y:'2020–23', s:'acc', t:['IFRS 17'], d:'IFRS 17 系统端到端实施，确保监管合规与财务报告就绪'},
+  {n:'中华联合保险', y:'2020–23', s:'acc', t:['数据平台'], d:'数据平台策略设计与框架开发，建立企业级数据能力'},
+  {n:'中华联合人寿', y:'2012–20', s:'ibm', t:['ITSP'], d:'IT 策略规划（ITSP），让科技能力与业务优先级对齐'},
+  {n:'友邦人寿', y:'2020–23', s:'acc', t:['数据平台'], d:'客户 DataMart 设计与部署，强化客户数据分析与精准营销'},
+  {n:'汇丰中国', y:'2020–23', s:'acc', t:['数据平台'], d:'数据平台设计与实施，提升数据治理水平'},
+  {n:'浦发银行', y:'2020–23', s:'acc', t:['云端转型'], d:'基于云端技术的银行业务模式重塑，支援数字化核心战略'},
+  {n:'建信人寿', y:'2012–20', s:'ibm', t:['数字平台','策略规划'], d:'网路业务策略规划与数字平台设计，拓展线上保险业务'},
+  {n:'中国人保', y:'2012–20', s:'ibm', t:['架构设计','ITSP'], d:'应用架构设计服务，以及寿险 IT 策略规划（ITSP）'},
+  {n:'美亚保险', y:'2012–20', s:'ibm', t:['测试 COE','外包管理'], d:'应用管理与测试卓越中心（COE）建立与管理，及测试服务外包'},
+  {n:'史带保险', y:'2012–20', s:'ibm', t:['PMO'], d:'核心系统 PMO 专案管理办公室服务，确保大型专案对齐与落地'},
+  {n:'中国人寿养老', y:'2012–20', s:'ibm', t:['核心系统'], d:'核心系统需求管理与验证，保障养老金业务系统品质'},
+  {n:'安邦（大家）保险集团', y:'2012–20', s:'ibm', t:['ITSP'], d:'集团层级 IT 策略规划（ITSP）制定'},
+  {n:'吉祥人寿', y:'2009–20', s:'ibm', t:['ITSP','核心系统'], d:'IT 策略规划（ITSP）开发，以及核心保险系统实施（长沙）'},
+  {n:'明台产险', y:'2012–20', s:'ibm', t:['数字创新'], d:'IT 创新计划设计与实施，驱动产险数字创新'},
+  {n:'富邦人寿（越南）', y:'2009–12', s:'other', t:['核心系统'], d:'核心保险系统部署，由中国台湾提供跨区域支援'},
+  {n:'南山人寿', y:'2003–09', s:'other', t:['核心系统转型'], d:'以客户端视角主导核心保险系统转型；率 10+ 人团队完成广州至台北 IT 服务迁移，业务零中断'}],
+'en': [
+  {n:"Taiwan's Largest Life Insurer", y:'2023–', s:'indep', t:['IT Strategy','Org Design'], d:'Co-developed an IT strategy framework and designed an optimized IT organizational structure, driving transformation across technology, organization, business and culture'},
+  {n:'ERGO Life', y:'2020–23', s:'acc', t:['As-Is Assessment'], d:'IT current-state (as-is) assessment to identify optimization opportunities and improvement paths'},
+  {n:'CPIC Life', y:'2020–23', s:'acc', t:['Core System','Roadmap'], d:'Group core system roadmap planning and architecture design, aligned with long-term business goals'},
+  {n:'CPIC Group', y:'2012–20', s:'ibm', t:['Core System'], d:'Life core system planning and end-to-end P&C core system implementation'},
+  {n:'MET Life', y:'2020–23', s:'acc', t:['IFRS 17'], d:'End-to-end IFRS 17 system implementation ensuring regulatory compliance and reporting readiness'},
+  {n:'China United Insurance', y:'2020–23', s:'acc', t:['Data Platform'], d:'Data platform strategy design and framework development, building enterprise data capability'},
+  {n:'China United Life', y:'2012–20', s:'ibm', t:['ITSP'], d:'IT strategy planning (ITSP), aligning technology capability with business priorities'},
+  {n:'AIA', y:'2020–23', s:'acc', t:['Data Platform'], d:'Customer DataMart design and deployment, strengthening customer analytics and precision marketing'},
+  {n:'HSBC China', y:'2020–23', s:'acc', t:['Data Platform'], d:'Data platform design and implementation, improving data governance'},
+  {n:'SPDB', y:'2020–23', s:'acc', t:['Cloud Transformation'], d:'Cloud-based banking business model redesign, supporting the core digital strategy'},
+  {n:'CCB Life', y:'2012–20', s:'ibm', t:['Digital Platform','Strategy'], d:'Internet business strategy planning and digital platform design, expanding online insurance'},
+  {n:'PICC', y:'2012–20', s:'ibm', t:['Architecture','ITSP'], d:'Application architecture design services and life insurance IT strategy planning (ITSP)'},
+  {n:'AIG', y:'2012–20', s:'ibm', t:['Testing COE','Outsourcing'], d:'Application management and testing Center of Excellence (COE) setup and management, plus testing outsourcing'},
+  {n:'STARR Insurance', y:'2012–20', s:'ibm', t:['PMO'], d:'Core system PMO (Project Management Office) services, ensuring program alignment and delivery'},
+  {n:'China Life Pension', y:'2012–20', s:'ibm', t:['Core System'], d:'Core system requirements management and validation, safeguarding pension business system quality'},
+  {n:'An Bang (Da Jia) Insurance Group', y:'2012–20', s:'ibm', t:['ITSP'], d:'Group-level IT strategy planning (ITSP) development'},
+  {n:'Ji Xiang Life', y:'2009–20', s:'ibm', t:['ITSP','Core System'], d:'IT strategy planning (ITSP) and core insurance system implementation (Changsha)'},
+  {n:'MSIG Ming Tai', y:'2012–20', s:'ibm', t:['Digital Innovation'], d:'IT innovation initiative design and implementation, driving P&C digital innovation'},
+  {n:'Fubon Life (Vietnam)', y:'2009–12', s:'other', t:['Core System'], d:'Core insurance system deployment, with cross-region support from Taiwan'},
+  {n:'Nanshan Life', y:'2003–09', s:'other', t:['Core Transformation'], d:'Led core insurance system transformation from the client side; migrated IT services from Guangzhou to Taipei with a 10+ member team and zero business disruption'}]};
+
+/* ================= LANG STATE ================= */
+let LANG = new URLSearchParams(location.search).get('lang') || localStorage.getItem('rc-lang') || 'zh-Hant';
+if(!TR[LANG]) LANG = 'zh-Hant';
+
+/* ================= RENDER ================= */
+function renderAll(){
+  const t = TR[LANG];
+  // static texts
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ const k = el.dataset.i18n; if(t[k]!==undefined) el.innerHTML = t[k]; });
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{ el.innerHTML = t[el.dataset.i18nHtml]; });
+  document.querySelectorAll('[data-i18n-alt]').forEach(el=>{ el.alt = t[el.dataset.i18nAlt] || ''; });
+  document.title = t.meta_title;
+  document.documentElement.lang = LANG;
+
+  // marquee
+  const names = CLIENTS[LANG].map(c=>c.n);
+  document.getElementById('mq').innerHTML = [...names,...names].map(n=>`<span>${n}</span>`).join('');
+
+  // cases
+  const caseWrap = document.getElementById('caseWrap');
+  caseWrap.innerHTML = CASES[LANG].map((c,i)=>`
+    <div class="case rv${i===0?' open':''}">
+      <div class="row">
+        <div class="idx">${c.idx}</div>
+        <h3>${c.co}</h3>
+        <div class="where"><b>${c.role}</b>${c.period} · ${c.loc}<br>${c.en}</div>
+        <div class="pm">+</div>
+      </div>
+      <div class="body"><div class="body-in">
+        <div class="cmetrics">${c.metrics.map(m=>`<div class="m"><div class="k tnum">${m[0]}</div><div class="t">${m[1]}</div></div>`).join('')}</div>
+        <ul class="bullets">${c.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>
+        <div class="clabel">${t.cases_clients} · ${c.clients.length}</div>
+        <div class="chips">${c.clients.map(x=>`<span>${x[0]}<i>${x[1]}</i></span>`).join('')}</div>
+      </div></div>
+    </div>`).join('');
+
+  // filters
+  const st = STAGES[LANG];
+  const chips = [{key:'all',label:ALL_LABEL[LANG]}].concat(Object.entries(st).map(([k,v])=>({key:k,label:v})));
+  document.getElementById('filters').innerHTML = chips.map((c,i)=>{
+    const n = c.key==='all' ? CLIENTS[LANG].length : CLIENTS[LANG].filter(x=>x.s===c.key).length;
+    return `<button class="chip${i===0?' act':''}" data-k="${c.key}">${c.label}<span class="n tnum">${n}</span></button>`;
+  }).join('');
+
+  // client grid
+  const grid = document.getElementById('cgrid');
+  grid.innerHTML = CLIENTS[LANG].map(c=>`
+    <article class="cc rv" data-s="${c.s}">
+      <div class="yr tnum">${c.y}</div>
+      <div class="stage">${st[c.s]}</div>
+      <h3>${c.n}</h3>
+      <div class="tags">${c.t.map(x=>`<i>${x}</i>`).join('')}</div>
+      <div class="desc">${c.d}</div>
+    </article>`).join('');
+  const ct = document.getElementById('ctotal'); if(ct) ct.textContent = CLIENTS[LANG].length;
+
+  // others
+  document.getElementById('otherList').innerHTML = OTHERS[LANG].map(o=>`
+    <div class="orow rv">
+      <div class="y tnum">${o[0]}</div>
+      <div class="co">${o[1]}<small>${o[2]}</small></div>
+      <p>${o[3]}</p>
+    </div>`).join('');
+
+  // expertise
+  document.getElementById('expGrid').innerHTML = EXPS[LANG].map(e=>`
+    <div class="ex rv"><div class="no">${e[0]}</div><h3>${e[1]}</h3><p>${e[2]}</p></div>`).join('');
+
+  // talks
+  document.getElementById('talkList').innerHTML =
+    `<div class="tl-head">${t.comm_head}</div>` +
+    TALKS[LANG].map(x=>`<div class="talk"><h4>${x[0]}</h4><p>${x[1]}</p></div>`).join('');
+
+  // reveal observer for newly rendered .rv
+  document.querySelectorAll('.rv:not(.on)').forEach(el=>io.observe(el));
+
+  // lang switch active state
+  document.querySelectorAll('#langSwitch button').forEach(b=>{
+    b.classList.toggle('act', b.dataset.lang===LANG);
+  });
+}
+
+/* ================= EVENTS ================= */
+// case accordion
+document.getElementById('caseWrap').addEventListener('click', e=>{
+  const cs = e.target.closest('.case'); if(!cs) return;
+  const wasOpen = cs.classList.contains('open');
+  document.querySelectorAll('#caseWrap .case').forEach(x=>x.classList.remove('open'));
+  if(!wasOpen) cs.classList.add('open');
+});
+
+// filters
+document.getElementById('filters').addEventListener('click', e=>{
+  const b = e.target.closest('.chip'); if(!b) return;
+  document.querySelectorAll('#filters .chip').forEach(x=>x.classList.remove('act'));
+  b.classList.add('act');
+  const k = b.dataset.k;
+  document.querySelectorAll('#cgrid .cc').forEach(card=>{
+    const show = k==='all' || card.dataset.s===k;
+    card.classList.toggle('hide', !show);
+    if(show){ card.classList.remove('on'); void card.offsetWidth; card.classList.add('on'); }
+  });
+});
+
+// lang switch
+document.getElementById('langSwitch').addEventListener('click', e=>{
+  const b = e.target.closest('button'); if(!b) return;
+  if(b.dataset.lang === LANG) return;
+  LANG = b.dataset.lang;
+  localStorage.setItem('rc-lang', LANG);
+  renderAll();
+});
+
+/* ================= SCROLL FX ================= */
+let lastY = 0;
+const hd = document.getElementById('hd');
+window.addEventListener('scroll', ()=>{
+  const y = window.scrollY;
+  if(y > lastY && y > 300){ hd.classList.add('out'); hd.classList.remove('in'); }
+  else { hd.classList.remove('out'); if(y>0) hd.classList.add('in'); }
+  lastY = y;
+  const h = document.documentElement;
+  document.getElementById('prog').style.width = (y/(h.scrollHeight-h.clientHeight)*100)+'%';
+},{passive:true});
+
+const io = new IntersectionObserver(es=>{
+  es.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('on'); io.unobserve(en.target); } });
+},{threshold:.15});
+
+const cio = new IntersectionObserver(es=>{
+  es.forEach(en=>{
+    if(!en.isIntersecting) return;
+    cio.unobserve(en.target);
+    const el = en.target, to = +el.dataset.to, t0 = performance.now(), dur = 1600;
+    const tick = now=>{
+      const p = Math.min((now-t0)/dur,1), e = 1-Math.pow(1-p,3);
+      el.textContent = Math.round(to*e);
+      if(p<1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  });
+},{threshold:.5});
+document.querySelectorAll('.stat .cnt').forEach(el=>cio.observe(el));
+
+renderAll();
+</script>
+</body>
+</html>
